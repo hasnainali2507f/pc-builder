@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-Built PCs - Instant Performance</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter font family -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0d0d; /* Deep dark background */
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        /* Custom Card Hover Effect (subtle lift and border glow) */
+        .product-card {
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1); /* Subtle initial border */
+        }
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(129, 140, 248, 0.4); /* Lift and blue/indigo glow */
+            border-color: #4f46e5;
+        }
+
+        /* Filter Checkbox styling */
+        .filter-checkbox:checked + .filter-label {
+            background-color: #4f46e5; /* Indigo-600 */
+            color: white;
+            font-weight: 600;
+        }
+        .filter-label {
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navigation Bar (Copied from Landing Page for consistency) -->
+    <header class="w-full bg-[#161616]/90 backdrop-blur-sm shadow-lg border-b border-gray-900 sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-extrabold text-white">PC BUILDER</div>
+            <nav class="hidden md:flex space-x-6 text-sm font-medium text-gray-400">
+                <a href="index.html" class="hover:text-white transition duration-200">Pre-Built</a>
+                <a href="3dpcbuilder.html" class="hover:text-white transition duration-200">Build Your Own</a>
+                <a href="component.html" class="hover:text-white transition duration-200">Components</a>
+            </nav>
+            <button id="myCartBtn" class="px-4 py-2 bg-indigo-600 text-white font-semibold rounded-md text-sm hover:bg-indigo-700 transition duration-200">My Cart</button>
+        </div>
+    </header>
+
+    <!-- Main Content Layout -->
+    <div class="max-w-7xl mx-auto px-6 py-10 md:py-16 flex flex-col md:flex-row gap-10">
+        
+        <!-- Sidebar Filters (Hidden on small screens, shown on medium/large) -->
+        <aside class="w-full md:w-64 flex-shrink-0 bg-[#161616] p-6 rounded-xl shadow-2xl sticky top-24 h-fit hidden md:block">
+            <h2 class="text-xl font-bold mb-6 text-white border-b border-gray-700 pb-3">Filter Systems</h2>
+
+            <!-- Filter Group: Use Case -->
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold text-gray-300 mb-3">Use Case</h3>
+                <div class="flex flex-wrap gap-2">
+                    <input type="checkbox" id="gaming" class="hidden filter-checkbox" checked>
+                    <label for="gaming" class="filter-label text-sm px-3 py-1 rounded-full bg-neutral-800 text-gray-400 hover:bg-neutral-700">Gaming</label>
+                    
+                    <input type="checkbox" id="creator" class="hidden filter-checkbox">
+                    <label for="creator" class="filter-label text-sm px-3 py-1 rounded-full bg-neutral-800 text-gray-400 hover:bg-neutral-700">Creator</label>
+                    
+                    <input type="checkbox" id="workstation" class="hidden filter-checkbox">
+                    <label for="workstation" class="filter-label text-sm px-3 py-1 rounded-full bg-neutral-800 text-gray-400 hover:bg-neutral-700">Workstation</label>
+                </div>
+            </div>
+
+            <!-- Filter Group: GPU Series -->
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold text-gray-300 mb-3">GPU Series</h3>
+                <div class="space-y-2">
+                    <label class="flex items-center text-sm text-gray-400 hover:text-white transition">
+                        <input type="checkbox" class="form-checkbox bg-neutral-700 border-none rounded text-indigo-600 focus:ring-indigo-500">
+                        <span class="ml-2">RTX 40 Series</span>
+                    </label>
+                    <label class="flex items-center text-sm text-gray-400 hover:text-white transition">
+                        <input type="checkbox" class="form-checkbox bg-neutral-700 border-none rounded text-indigo-600 focus:ring-indigo-500">
+                        <span class="ml-2">RTX 30 Series</span>
+                    </label>
+                    <label class="flex items-center text-sm text-gray-400 hover:text-white transition">
+                        <input type="checkbox" class="form-checkbox bg-neutral-700 border-none rounded text-indigo-600 focus:ring-indigo-500">
+                        <span class="ml-2">AMD RX 7000</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Filter Group: Price Range -->
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold text-gray-300 mb-3">Price Range</h3>
+                <input type="range" min="1000" max="5000" value="3000" class="w-full h-1 bg-neutral-700 rounded-lg appearance-none cursor-pointer range-lg accent-indigo-600">
+                <div class="flex justify-between text-sm text-gray-400 mt-2">
+                    <span>$1000</span>
+                    <span>$5000+</span>
+                </div>
+            </div>
+
+            <button id="applyFiltersBtn" class="w-full py-2 mt-4 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition duration-300">Apply Filters</button>
+
+        </aside>
+
+        <!-- Product Grid -->
+        <main class="flex-grow">
+            <h1 class="text-4xl font-extrabold mb-8">Our Signature Pre-Built Systems</h1>
+            
+            <!-- Sort Bar -->
+            <div class="flex justify-between items-center mb-6 border-b border-gray-800 pb-4">
+                <p class="text-gray-400">Showing 8 of 12 Systems</p>
+                <div class="flex items-center space-x-2 text-sm">
+                    <label for="sort" class="text-gray-400 hidden sm:block">Sort by:</label>
+                    <select id="sort" class="bg-[#161616] border border-gray-700 text-white rounded-lg px-3 py-1 focus:ring-indigo-500 focus:border-indigo-500">
+                        <option>Recommended</option>
+                        <option>Price: Low to High</option>
+                        <option>Price: High to Low</option>
+                        <option>Best Seller</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Product Cards Grid -->
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
+                
+                <!-- PC Card 1: The Apex Predator -->
+                <div class="product-card bg-[#161616] rounded-xl p-6 flex flex-col">
+                    <h2 class="text-2xl font-bold text-white mb-2">Apex Predator</h2>
+                    <p class="text-sm text-indigo-400 mb-4">Ultimate 4K Gaming & Streaming</p>
+                    
+                    <!-- Placeholder for Image -->
+                    <div class="aspect-video bg-neutral-800 rounded-lg mb-4 flex items-center justify-center">
+                        <span class="text-5xl text-gray-600">🖥️</span>
+                    </div>
+
+                    <div class="flex-grow space-y-2 text-sm text-gray-300">
+                        <p class="flex justify-between"><span>Processor:</span> <span class="font-medium">Intel i9-14900K</span></p>
+                        <p class="flex justify-between"><span>Graphics:</span> <span class="font-medium text-green-400">RTX 4090 (24GB)</span></p>
+                        <p class="flex justify-between"><span>RAM:</span> <span class="font-medium">64GB DDR5 6400MHz</span></p>
+                        <p class="flex justify-between"><span>Storage:</span> <span class="font-medium">4TB Gen4 NVMe SSD</span></p>
+                        <p class="flex justify-between"><span>Cooling:</span> <span class="font-medium">Custom 360mm AIO</span></p>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-gray-800 flex justify-between items-center">
+                        <span class="text-3xl font-extrabold text-green-400">$4,999</span>
+                        <button class="configure-btn px-5 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition duration-300">
+                            Configure & Buy
+                        </button>
+                    </div>
+                </div>
+
+                <!-- PC Card 2: The Silent Creator -->
+                <div class="product-card bg-[#161616] rounded-xl p-6 flex flex-col">
+                    <h2 class="text-2xl font-bold text-white mb-2">Silent Creator</h2>
+                    <p class="text-sm text-yellow-400 mb-4">Video Editing & 3D Rendering Powerhouse</p>
+                    
+                    <!-- Placeholder for Image -->
+                    <div class="aspect-video bg-neutral-800 rounded-lg mb-4 flex items-center justify-center">
+                        <span class="text-5xl text-gray-600">🛠️</span>
+                    </div>
+
+                    <div class="flex-grow space-y-2 text-sm text-gray-300">
+                        <p class="flex justify-between"><span>Processor:</span> <span class="font-medium">AMD Ryzen 9 7950X3D</span></p>
+                        <p class="flex justify-between"><span>Graphics:</span> <span class="font-medium text-green-400">RTX 4080 (16GB)</span></p>
+                        <p class="flex justify-between"><span>RAM:</span> <span class="font-medium">128GB DDR5 ECC</span></p>
+                        <p class="flex justify-between"><span>Storage:</span> <span class="font-medium">8TB RAID SSD</span></p>
+                        <p class="flex justify-between"><span>Cooling:</span> <span class="font-medium">Noctua Air Cooler (Silent)</span></p>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-gray-800 flex justify-between items-center">
+                        <span class="text-3xl font-extrabold text-green-400">$4,499</span>
+                        <button class="configure-btn px-5 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition duration-300">
+                            Configure & Buy
+                        </button>
+                    </div>
+                </div>
+
+                <!-- PC Card 3: The Entry Gamer -->
+                <div class="product-card bg-[#161616] rounded-xl p-6 flex flex-col">
+                    <h2 class="text-2xl font-bold text-white mb-2">Entry Gamer</h2>
+                    <p class="text-sm text-red-400 mb-4">1080p High Refresh Rate Gaming</p>
+                    
+                    <!-- Placeholder for Image -->
+                    <div class="aspect-video bg-neutral-800 rounded-lg mb-4 flex items-center justify-center">
+                        <span class="text-5xl text-gray-600">🎮</span>
+                    </div>
+
+                    <div class="flex-grow space-y-2 text-sm text-gray-300">
+                        <p class="flex justify-between"><span>Processor:</span> <span class="font-medium">Ryzen 5 7600X</span></p>
+                        <p class="flex justify-between"><span>Graphics:</span> <span class="font-medium text-green-400">RX 7700 XT (12GB)</span></p>
+                        <p class="flex justify-between"><span>RAM:</span> <span class="font-medium">16GB DDR5 5200MHz</span></p>
+                        <p class="flex justify-between"><span>Storage:</span> <span class="font-medium">1TB NVMe SSD</span></p>
+                        <p class="flex justify-between"><span>Cooling:</span> <span class="font-medium">Standard Tower Cooler</span></p>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-gray-800 flex justify-between items-center">
+                        <span class="text-3xl font-extrabold text-green-400">$1,699</span>
+                        <button class="configure-btn px-5 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition duration-300">
+                            Configure & Buy
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- PC Card 4: The Budget Battlebox (Responsive visibility) -->
+                <div class="product-card bg-[#161616] rounded-xl p-6 flex flex-col sm:col-span-2 xl:col-span-1">
+                    <h2 class="text-2xl font-bold text-white mb-2">Budget Battlebox</h2>
+                    <p class="text-sm text-red-400 mb-4">Entry-Level Gaming & Productivity</p>
+                    
+                    <!-- Placeholder for Image -->
+                    <div class="aspect-video bg-neutral-800 rounded-lg mb-4 flex items-center justify-center">
+                        <span class="text-5xl text-gray-600">💰</span>
+                    </div>
+
+                    <div class="flex-grow space-y-2 text-sm text-gray-300">
+                        <p class="flex justify-between"><span>Processor:</span> <span class="font-medium">Intel i3-12100F</span></p>
+                        <p class="flex justify-between"><span>Graphics:</span> <span class="font-medium text-green-400">RTX 3050 (8GB)</span></p>
+                        <p class="flex justify-between"><span>RAM:</span> <span class="font-medium">16GB DDR4 3200MHz</span></p>
+                        <p class="flex justify-between"><span>Storage:</span> <span class="font-medium">500GB SSD</span></p>
+                        <p class="flex justify-between"><span>Cooling:</span> <span class="font-medium">Stock Cooler</span></p>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-gray-800 flex justify-between items-center">
+                        <span class="text-3xl font-extrabold text-green-400">$899</span>
+                        <button class="configure-btn px-5 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition duration-300">
+                            Configure & Buy
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+            <!-- End Product Cards Grid -->
+
+        </main>
+        
+    </div>
+    <!-- End Main Content Layout -->
+
+    <!-- Custom Message Box Modal -->
+    <div id="messageBox" class="fixed inset-0 bg-black bg-opacity-75 hidden items-center justify-center z-50">
+        <div class="bg-[#161616] p-6 rounded-xl shadow-2xl max-w-sm w-full border border-indigo-700">
+            <h3 id="messageTitle" class="text-xl font-bold mb-3 text-indigo-400">Action Successful</h3>
+            <p id="messageContent" class="text-gray-300 mb-4">This is a placeholder message.</p>
+            <button id="closeMessage" class="w-full py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition duration-300">
+                OK
+            </button>
+        </div>
+    </div>
+
+    <!-- Simple Footer -->
+    <footer class="py-6 border-t border-gray-900 bg-black mt-10">
+        <div class="max-w-7xl mx-auto px-6 text-center text-sm text-gray-500">
+            &copy; 2024 PC Builder. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Message Box Logic (for button feedback) ---
+            const messageBox = document.getElementById('messageBox');
+            const messageTitle = document.getElementById('messageTitle');
+            const messageContent = document.getElementById('messageContent');
+            const closeMessage = document.getElementById('closeMessage');
+            
+            function showMessage(title, content) {
+                messageTitle.textContent = title;
+                messageContent.textContent = content;
+                messageBox.classList.remove('hidden');
+                messageBox.classList.add('flex');
+            }
+
+            closeMessage.addEventListener('click', () => {
+                messageBox.classList.add('hidden');
+                messageBox.classList.remove('flex');
+            });
+            
+            // --- Button Event Handlers ---
+
+            // 1. My Cart button (in the header)
+            const myCartBtn = document.getElementById('myCartBtn');
+            myCartBtn.addEventListener('click', () => {
+                showMessage("Shopping Cart Access", "You clicked 'My Cart'! Cart review and checkout functionality would be loaded here.");
+            });
+
+            // 2. Apply Filters button (in the sidebar)
+            const applyFiltersBtn = document.getElementById('applyFiltersBtn');
+            applyFiltersBtn.addEventListener('click', () => {
+                showMessage("Filters Applied", "The system has filtered the products based on your selections (placeholder functionality).");
+            });
+
+            // 3. Configure & Buy buttons (on all product cards)
+            document.querySelectorAll('.configure-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    // Find the closest product card to get the product name
+                    const card = event.target.closest('.product-card');
+                    const productName = card.querySelector('h2').textContent;
+                    showMessage("Configuration Initiated", `You are configuring the '${productName}'. This action would redirect to a detailed customization page.`);
+                });
+            });
+
+            // Simple JavaScript to handle the filter checkbox styling for visual feedback (existing code)
+            const checkboxes = document.querySelectorAll('.filter-checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    // This is handled by pure CSS (:checked + .filter-label), but can be extended here.
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

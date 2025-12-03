@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC Builder Blog - Insights & Guides</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter font family -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0d0d; /* Deep dark background */
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        /* Post Card Hover Effect */
+        .post-card {
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1); 
+        }
+        .post-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 0 10px rgba(79, 70, 229, 0.3); /* Lift and indigo glow */
+            border-color: #4f46e5;
+        }
+
+        /* Category Chip Styling */
+        .category-chip {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navigation Bar -->
+    <header class="w-full bg-[#161616]/90 backdrop-blur-sm shadow-lg border-b border-gray-900 sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-extrabold text-white">PC BUILDER</div>
+            <nav class="hidden md:flex space-x-6 text-sm font-medium text-gray-400">
+                <a href="prebuilt.html" class="hover:text-white transition duration-200">Pre-Built</a>
+                <a href="3dpcbuilder.html" class="hover:text-white transition duration-200">Build Your Own</a>
+                <a href="component.html" class="hover:text-white transition duration-200">Components</a>
+                <a href="blog.html" class="text-indigo-400 font-bold transition duration-200">Blog</a>
+            </nav>
+            <button id="myCartBtn" class="px-4 py-2 bg-indigo-600 text-white font-semibold rounded-md text-sm hover:bg-indigo-700 transition duration-200">My Cart</button>
+        </div>
+    </header>
+
+    <!-- Main Content Layout -->
+    <div class="max-w-7xl mx-auto px-6 py-10 md:py-16 flex flex-col lg:flex-row gap-10">
+        
+        <!-- Main Blog Posts List -->
+        <main class="lg:w-2/3">
+            <h1 class="text-4xl font-extrabold mb-3">PC Insights & Build Guides</h1>
+            <p class="text-lg text-gray-400 mb-10">The latest news, tips, and deep dives into the world of computer hardware.</p>
+
+            <div id="blog-posts" class="space-y-8">
+                
+                <!-- Blog Post Card 1 -->
+                <article class="post-card bg-[#161616] rounded-xl p-6 flex flex-col md:flex-row gap-6">
+                    <!-- Image Placeholder -->
+                    <div class="w-full md:w-1/3 aspect-video md:aspect-auto bg-neutral-800 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <span class="text-5xl text-gray-600">🌡️</span>
+                    </div>
+
+                    <div class="md:w-2/3 flex flex-col justify-between">
+                        <div>
+                            <span class="category-chip bg-indigo-900 text-indigo-300">Tech Deep Dive</span>
+                            <h2 class="text-2xl font-bold text-white mt-3 mb-2">The Future of GPU Cooling: Liquid Metal vs. Vapor Chambers</h2>
+                            <p class="text-gray-400 text-base line-clamp-3">We break down the science behind high-performance graphics card cooling solutions. Learn how advanced thermal designs keep next-gen GPUs running at peak efficiency...</p>
+                        </div>
+                        <div class="mt-4 flex justify-between items-center">
+                            <span class="text-sm text-gray-500">By Alex Cho | July 1, 2024</span>
+                            <button class="read-more-btn px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg text-sm hover:bg-indigo-700 transition duration-300" data-post-title="The Future of GPU Cooling">
+                                Read More
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Blog Post Card 2 -->
+                <article class="post-card bg-[#161616] rounded-xl p-6 flex flex-col md:flex-row gap-6">
+                    <!-- Image Placeholder -->
+                    <div class="w-full md:w-1/3 aspect-video md:aspect-auto bg-neutral-800 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <span class="text-5xl text-gray-600">🛠️</span>
+                    </div>
+
+                    <div class="md:w-2/3 flex flex-col justify-between">
+                        <div>
+                            <span class="category-chip bg-green-900 text-green-300">Build Guides</span>
+                            <h2 class="text-2xl font-bold text-white mt-3 mb-2">Budget Gaming PC Build: Max Performance Under $1000</h2>
+                            <p class="text-gray-400 text-base line-clamp-3">Don't break the bank! We provide a complete parts list and step-by-step instructions for building a powerful 1080p gaming rig without compromising on quality or frame rates...</p>
+                        </div>
+                        <div class="mt-4 flex justify-between items-center">
+                            <span class="text-sm text-gray-500">By Jamie Lee | June 25, 2024</span>
+                            <button class="read-more-btn px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg text-sm hover:bg-indigo-700 transition duration-300" data-post-title="Budget Gaming PC Build">
+                                Read More
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Blog Post Card 3 -->
+                <article class="post-card bg-[#161616] rounded-xl p-6 flex flex-col md:flex-row gap-6">
+                    <!-- Image Placeholder -->
+                    <div class="w-full md:w-1/3 aspect-video md:aspect-auto bg-neutral-800 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <span class="text-5xl text-gray-600">⚡</span>
+                    </div>
+
+                    <div class="md:w-2/3 flex flex-col justify-between">
+                        <div>
+                            <span class="category-chip bg-yellow-900 text-yellow-300">Component Reviews</span>
+                            <h2 class="text-2xl font-bold text-white mt-3 mb-2">DDR5 RAM: Is It Worth the Upgrade in 2024?</h2>
+                            <p class="text-gray-400 text-base line-clamp-3">We benchmark the latest DDR5 kits against high-speed DDR4 to see if the performance jump justifies the price point for different types of users, from gamers to professionals...</p>
+                        </div>
+                        <div class="mt-4 flex justify-between items-center">
+                            <span class="text-sm text-gray-500">By S. Varma | June 18, 2024</span>
+                            <button class="read-more-btn px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg text-sm hover:bg-indigo-700 transition duration-300" data-post-title="DDR5 RAM Upgrade">
+                                Read More
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </main>
+
+        <!-- Sidebar (Categories and Newsletter) -->
+        <aside class="lg:w-1/3 flex-shrink-0 space-y-8">
+            
+            <!-- Categories -->
+            <div class="bg-[#161616] p-6 rounded-xl shadow-2xl">
+                <h3 class="text-xl font-bold mb-4 text-white border-b border-gray-700 pb-3">Popular Categories</h3>
+                <ul class="space-y-3 text-gray-400">
+                    <li><a href="#" class="hover:text-indigo-400 transition flex justify-between items-center">Tech Deep Dive <span class="bg-neutral-800 text-xs px-2 py-0.5 rounded-full">4</span></a></li>
+                    <li><a href="#" class="hover:text-indigo-400 transition flex justify-between items-center">Build Guides <span class="bg-neutral-800 text-xs px-2 py-0.5 rounded-full">6</span></a></li>
+                    <li><a href="#" class="hover:text-indigo-400 transition flex justify-between items-center">Component Reviews <span class="bg-neutral-800 text-xs px-2 py-0.5 rounded-full">9</span></a></li>
+                    <li><a href="#" class="hover:text-indigo-400 transition flex justify-between items-center">News & Updates <span class="bg-neutral-800 text-xs px-2 py-0.5 rounded-full">5</span></a></li>
+                </ul>
+            </div>
+
+            <!-- Newsletter Signup -->
+            <div class="bg-indigo-900/40 p-6 rounded-xl shadow-2xl border border-indigo-700">
+                <h3 class="text-xl font-bold mb-3 text-indigo-300">Stay Updated</h3>
+                <p class="text-gray-200 text-sm mb-4">Subscribe to our newsletter for exclusive build guides and component deals.</p>
+                <form id="newsletterForm" class="space-y-3">
+                    <input type="email" id="emailInput" placeholder="Your Email Address" required 
+                           class="w-full px-4 py-2 rounded-lg bg-neutral-900 text-white border border-indigo-600 focus:ring-indigo-500 focus:border-indigo-500 placeholder-gray-500">
+                    <button type="submit" class="w-full py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition duration-300">
+                        Subscribe
+                    </button>
+                </form>
+            </div>
+
+        </aside>
+
+    </div>
+    <!-- End Main Content Layout -->
+
+    <!-- Custom Message Box Modal (for button feedback) -->
+    <div id="messageBox" class="fixed inset-0 bg-black bg-opacity-75 hidden items-center justify-center z-50">
+        <div class="bg-[#161616] p-6 rounded-xl shadow-2xl max-w-sm w-full border border-indigo-700">
+            <h3 id="messageTitle" class="text-xl font-bold mb-3 text-indigo-400">Action Successful</h3>
+            <p id="messageContent" class="text-gray-300 mb-4">This is a placeholder message.</p>
+            <button id="closeMessage" class="w-full py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition duration-300">
+                OK
+            </button>
+        </div>
+    </div>
+
+    <!-- Simple Footer -->
+    <footer class="py-6 border-t border-gray-900 bg-black mt-10">
+        <div class="max-w-7xl mx-auto px-6 text-center text-sm text-gray-500">
+            &copy; 2024 PC Builder. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- Message Box Logic ---
+            const messageBox = document.getElementById('messageBox');
+            const messageTitle = document.getElementById('messageTitle');
+            const messageContent = document.getElementById('messageContent');
+            const closeMessage = document.getElementById('closeMessage');
+            
+            function showMessage(title, content) {
+                messageTitle.textContent = title;
+                messageContent.textContent = content;
+                messageBox.classList.remove('hidden');
+                messageBox.classList.add('flex');
+            }
+
+            closeMessage.addEventListener('click', () => {
+                messageBox.classList.add('hidden');
+                messageBox.classList.remove('flex');
+            });
+            
+            // --- Button Event Handlers ---
+
+            // 1. My Cart button (in the header)
+            const myCartBtn = document.getElementById('myCartBtn');
+            myCartBtn.addEventListener('click', () => {
+                showMessage("Shopping Cart Access", "You clicked 'My Cart'! Your build components are ready for checkout (placeholder functionality).");
+            });
+
+            // 2. Read More buttons
+            document.querySelectorAll('.read-more-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const postTitle = event.target.getAttribute('data-post-title');
+                    showMessage("Reading Post", `Redirecting to the full article: '${postTitle}'. Full post viewing would happen here.`);
+                });
+            });
+
+            // 3. Newsletter Signup Form
+            const newsletterForm = document.getElementById('newsletterForm');
+            const emailInput = document.getElementById('emailInput');
+
+            newsletterForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const email = emailInput.value;
+                if (email) {
+                    showMessage("Subscription Successful", `Thank you for subscribing! We will send updates to ${email}.`);
+                    emailInput.value = ''; // Clear input after submission
+                } else {
+                    showMessage("Error", "Please enter a valid email address to subscribe.");
+                }
+            });
+
+            // 4. Category Links (Placeholder interaction)
+            document.querySelectorAll('aside a').forEach(link => {
+                link.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const categoryName = event.target.closest('a').textContent.split('(')[0].trim();
+                    showMessage("Filter Applied", `Filtering blog posts by the category: '${categoryName}'.`);
+                });
+            });
+
+        });
+    </script>
+
+</body>
+</html>

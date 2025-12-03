@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Account - Sign In & Profile (3 edits limit)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+    body { font-family: 'Inter', sans-serif; background:#0d0d0d; color:#fff; min-height:100vh; }
+    .profile-img { width:36px; height:36px; border-radius:50%; object-fit:cover; border:2px solid #4f46e5; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="w-full bg-[#161616]/90 backdrop-blur-sm shadow-lg border-b border-gray-900 sticky top-0 z-10">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="text-2xl font-extrabold text-white">PC BUILDER</div>
+      <nav class="hidden md:flex space-x-6 text-sm font-medium text-gray-400">
+        <a href="#" class="hover:text-white">Pre-Built</a>
+        <a href="#" class="hover:text-white">Build Your Own</a>
+        <a href="#" class="hover:text-white">Components</a>
+        <a href="#" class="hover:text-white">Blog</a>
+      </nav>
+      <div id="authHeaderContainer">
+        <button id="headerLoginBtn" class="px-4 py-2 bg-indigo-600 text-white font-semibold rounded-md text-sm hover:bg-indigo-700">Log In</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="min-h-[calc(100vh-160px)] flex items-center justify-center p-4">
+    <div id="loadingView" class="text-indigo-400 text-xl font-semibold">Checking authentication state...</div>
+
+    <!-- SIGNED OUT -->
+    <div id="signedOutView" class="hidden max-w-lg w-full">
+      <div class="bg-[#161616] p-8 md:p-12 rounded-xl shadow-2xl border border-gray-800">
+        <div id="loginFormView">
+          <h1 class="text-3xl font-bold text-white mb-6 text-center">Sign In to PC Builder</h1>
+          <form id="loginForm" class="space-y-4">
+            <input id="loginEmail" type="email" placeholder="Email Address" required class="w-full px-4 py-3 rounded-lg bg-neutral-900 text-white border border-gray-700 placeholder-gray-500">
+            <input id="loginPassword" type="password" placeholder="Password" required class="w-full px-4 py-3 rounded-lg bg-neutral-900 text-white border border-gray-700 placeholder-gray-500">
+            <button type="submit" class="w-full py-3 bg-indigo-600 text-white text-lg font-bold rounded-lg hover:bg-indigo-700">Log In</button>
+          </form>
+          <p class="text-center text-gray-500 mt-6">Don't have an account? <a href="#" id="showRegisterBtn" class="text-indigo-400 font-semibold">Register Here</a></p>
+        </div>
+
+        <div id="registerFormView" class="hidden">
+          <h1 class="text-3xl font-bold text-white mb-6 text-center">Create Your Account</h1>
+          <form id="registerForm" class="space-y-4">
+            <div class="flex space-x-4">
+              <input id="regFirstName" type="text" placeholder="First Name" required class="w-1/2 px-4 py-3 rounded-lg bg-neutral-900 text-white border border-gray-700">
+              <input id="regLastName" type="text" placeholder="Last Name" required class="w-1/2 px-4 py-3 rounded-lg bg-neutral-900 text-white border border-gray-700">
+            </div>
+            <input id="regEmail" type="email" placeholder="Email Address (Your ID)" required class="w-full px-4 py-3 rounded-lg bg-neutral-900 text-white border border-gray-700">
+            <input id="regPassword" type="password" placeholder="Password (Min 6 characters)" required class="w-full px-4 py-3 rounded-lg bg-neutral-900 text-white border border-gray-700">
+            <input id="regImage" type="url" placeholder="Profile Image URL (Optional)" class="w-full px-4 py-3 rounded-lg bg-neutral-900 text-white border border-gray-700">
+            <button type="submit" class="w-full py-3 bg-indigo-600 text-white text-lg font-bold rounded-lg hover:bg-indigo-700">Register and Sign In</button>
+          </form>
+          <p class="text-center text-gray-500 mt-6">Already registered? <a href="#" id="showLoginBtn" class="text-indigo-400 font-semibold">Sign In Here</a></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIGNED IN -->
+    <div id="signedInView" class="hidden bg-[#161616] p-8 md:p-12 rounded-xl shadow-2xl max-w-lg w-full border border-indigo-700">
+      <div class="flex flex-col items-center space-y-4">
+        <img id="profileImageDisplay" src="https://placehold.co/96x96/4f46e5/ffffff?text=U" alt="Profile" class="w-24 h-24 rounded-full object-cover border-4 border-indigo-500">
+        <h1 id="welcomeTitle" class="text-3xl font-bold text-white text-center">Welcome!</h1>
+
+        <div class="bg-neutral-800 p-4 rounded-lg w-full">
+          <p class="text-sm text-gray-400 mb-1">Full Name:</p>
+          <p id="fullNameDisplay" class="text-xl font-semibold text-white break-all"></p>
+          <p class="text-sm text-gray-400 mt-3 mb-1">Registered ID (Email):</p>
+          <p id="userEmailDisplay" class="text-lg font-mono text-green-400 break-all"></p>
+          <p class="text-sm text-gray-400 mt-3 mb-1">Edits Remaining:</p>
+          <p id="editsRemainingDisplay" class="text-lg font-semibold text-indigo-300"></p>
+        </div>
+
+        <div class="w-full grid grid-cols-1 gap-3">
+          <button id="toggleEditBtn" class="w-full py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700">Edit Profile</button>
+          <button id="signOutBtn" class="w-full py-2 bg-red-700 text-white rounded-lg font-semibold hover:bg-red-800">Sign Out</button>
+        </div>
+
+        <!-- Edit form (hidden until edit) -->
+        <div id="editPanel" class="hidden w-full bg-neutral-900 p-4 rounded-lg">
+          <h2 class="text-lg font-bold mb-3">Edit Profile (uses 1 edit per successful save)</h2>
+          <form id="editForm" class="space-y-3">
+            <div class="flex gap-2">
+              <input id="editFirstName" type="text" placeholder="First name" required class="w-1/2 px-3 py-2 rounded bg-neutral-800">
+              <input id="editLastName" type="text" placeholder="Last name" required class="w-1/2 px-3 py-2 rounded bg-neutral-800">
+            </div>
+            <input id="editImage" type="url" placeholder="Profile Image URL" class="w-full px-3 py-2 rounded bg-neutral-800">
+            <div class="flex gap-2">
+              <button id="saveProfileBtn" type="submit" class="flex-1 py-2 bg-green-600 rounded font-semibold hover:bg-green-700">Save Changes</button>
+              <button id="cancelEditBtn" type="button" class="flex-1 py-2 bg-gray-700 rounded hover:bg-gray-600">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOCKED VIEW -->
+    <div id="lockedView" class="hidden max-w-lg w-full">
+      <div class="bg-[#121212] p-10 rounded-xl border border-red-700 text-center">
+        <h2 class="text-2xl font-bold text-red-400 mb-4">Account Locked</h2>
+        <p class="text-gray-300 mb-4">You used all your allowed profile changes (3). This account has been locked and the website is not accessible for this user.</p>
+        <p class="text-sm text-gray-400 mb-6">If this is a mistake, contact the site administrator for help.</p>
+        <button id="lockedSignOutBtn" class="py-2 px-6 bg-red-700 rounded text-white hover:bg-red-800">OK</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Message Modal -->
+  <div id="messageBox" class="fixed inset-0 bg-black bg-opacity-75 hidden items-center justify-center z-50">
+    <div class="bg-[#161616] p-6 rounded-xl shadow-2xl max-w-sm w-full border border-indigo-700">
+      <h3 id="messageTitle" class="text-xl font-bold mb-3 text-indigo-400">Notification</h3>
+      <p id="messageContent" class="text-gray-300 mb-4"></p>
+      <button id="closeMessage" class="w-full py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700">OK</button>
+    </div>
+  </div>
+
+  <footer class="py-6 border-t border-gray-900 bg-black mt-10">
+    <div class="max-w-7xl mx-auto px-6 text-center text-sm text-gray-500">&copy; 2024 PC Builder. Powered by Firebase.</div>
+  </footer>
+
+  <script type="module">
+    // ---------- Firebase imports ----------
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import {
+      getAuth,
+      signInWithCustomToken,
+      onAuthStateChanged,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      signOut,
+      updateProfile
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import {
+      getFirestore,
+      setDoc,
+      doc,
+      getDoc,
+      updateDoc,
+      serverTimestamp,
+      setLogLevel
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // Helpful debug log level
+    setLogLevel('Debug');
+
+    // ---------- Config placeholders (fill these, or inject same as before) ----------
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+    const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+    const PLACEHOLDER_IMG = "https://placehold.co/96x96/4f46e5/ffffff?text=U";
+
+    // ---------- UI refs ----------
+    const loadingView = document.getElementById('loadingView');
+    const signedOutView = document.getElementById('signedOutView');
+    const signedInView = document.getElementById('signedInView');
+    const lockedView = document.getElementById('lockedView');
+
+    const authHeaderContainer = document.getElementById('authHeaderContainer');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const signOutBtn = document.getElementById('signOutBtn');
+    const showRegisterBtn = document.getElementById('showRegisterBtn');
+    const showLoginBtn = document.getElementById('showLoginBtn');
+
+    const profileImageDisplay = document.getElementById('profileImageDisplay');
+    const fullNameDisplay = document.getElementById('fullNameDisplay');
+    const userEmailDisplay = document.getElementById('userEmailDisplay');
+    const welcomeTitle = document.getElementById('welcomeTitle');
+    const editsRemainingDisplay = document.getElementById('editsRemainingDisplay');
+
+    const toggleEditBtn = document.getElementById('toggleEditBtn');
+    const editPanel = document.getElementById('editPanel');
+    const editForm = document.getElementById('editForm');
+    const editFirstName = document.getElementById('editFirstName');
+    const editLastName = document.getElementById('editLastName');
+    const editImage = document.getElementById('editImage');
+    const saveProfileBtn = document.getElementById('saveProfileBtn');
+    const cancelEditBtn = document.getElementById('cancelEditBtn');
+
+    const messageBox = document.getElementById('messageBox');
+    const messageTitle = document.getElementById('messageTitle');
+    const messageContent = document.getElementById('messageContent');
+    const closeMessage = document.getElementById('closeMessage');
+    const lockedSignOutBtn = document.getElementById('lockedSignOutBtn');
+
+    // ---------- Helper UI functions ----------
+    function showMessage(title, content) {
+      messageTitle.textContent = title;
+      messageContent.textContent = content;
+      messageBox.classList.remove('hidden');
+      messageBox.classList.add('flex');
+    }
+    closeMessage.addEventListener('click', () => {
+      messageBox.classList.add('hidden');
+      messageBox.classList.remove('flex');
+    });
+
+    function hideAllViews() {
+      loadingView.classList.add('hidden');
+      signedOutView.classList.add('hidden');
+      signedInView.classList.add('hidden');
+      lockedView.classList.add('hidden');
+    }
+    function showLoginForm() {
+      document.getElementById('loginFormView').classList.remove('hidden');
+      document.getElementById('registerFormView').classList.add('hidden');
+      signedOutView.classList.remove('hidden');
+    }
+    function showRegisterForm() {
+      document.getElementById('loginFormView').classList.add('hidden');
+      document.getElementById('registerFormView').classList.remove('hidden');
+      signedOutView.classList.remove('hidden');
+    }
+
+    // Header update
+    function updateHeader(user) {
+      if (user) {
+        const displayName = user.displayName || user.email.split('@')[0];
+        const photoURL = user.photoURL || PLACEHOLDER_IMG;
+        const initials = displayName.substring(0,1).toUpperCase();
+        authHeaderContainer.innerHTML = `
+          <div id="headerProfile" class="flex items-center space-x-2 cursor-pointer group relative">
+            <span class="text-sm font-medium text-white hidden md:block">Hi, ${displayName.split(' ')[0]}</span>
+            <img src="${photoURL}" alt="${initials}" onerror="this.onerror=null;this.src='${PLACEHOLDER_IMG}'" class="profile-img">
+            <div id="headerProfileDropdown" class="absolute right-0 mt-32 w-48 bg-[#161616] rounded-md shadow-lg py-1 ring-1 ring-black ring-opacity-5 hidden group-hover:block z-20">
+              <a href="#" id="headerSignOutBtn" class="block px-4 py-2 text-sm text-gray-300 hover:bg-neutral-800">Sign Out</a>
+            </div>
+          </div>`;
+        document.getElementById('headerSignOutBtn')?.addEventListener('click', async (e) => {
+          e.preventDefault();
+          await handleSignOut();
+        });
+      } else {
+        authHeaderContainer.innerHTML = `<button id="headerLoginBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm">Log In</button>`;
+        document.getElementById('headerLoginBtn')?.addEventListener('click', () => showMessage("Login Page", "You are currently on the Login page."));
+      }
+    }
+
+    // ---------- Firestore helpers ----------
+    let app, auth, db;
+
+    // Path: /artifacts/{appId}/users/{uid}/profiles/main_profile
+    function profileDocRef(uid) {
+      return doc(getFirestore(app), `/artifacts/${appId}/users/${uid}/profiles/main_profile`);
+    }
+
+    async function readProfileDoc(uid) {
+      try {
+        const ref = doc(db, `/artifacts/${appId}/users/${uid}/profiles/main_profile`);
+        const snap = await getDoc(ref);
+        if (snap.exists()) return snap.data();
+        return null;
+      } catch (err) {
+        console.error("readProfileDoc error:", err);
+        return null;
+      }
+    }
+
+    // ---------- Auth handlers ----------
+    async function handleRegistration(e) {
+      e.preventDefault();
+      const email = document.getElementById('regEmail').value.trim();
+      const password = document.getElementById('regPassword').value;
+      const firstName = document.getElementById('regFirstName').value.trim();
+      const lastName = document.getElementById('regLastName').value.trim();
+      const photoUrl = document.getElementById('regImage').value.trim();
+
+      if (password.length < 6) {
+        showMessage("Registration Error", "Password must be at least 6 characters long.");
+        return;
+      }
+
+      try {
+        const cred = await createUserWithEmailAndPassword(auth, email, password);
+        const user = cred.user;
+
+        // initial profile doc with editsRemaining = 3 and locked = false
+        const finalPhotoURL = photoUrl || PLACEHOLDER_IMG.replace('text=U', `text=${firstName.substring(0,1).toUpperCase()}`);
+        await updateProfile(user, { displayName: `${firstName} ${lastName}`, photoURL: finalPhotoURL });
+
+        // Save to Firestore
+        const profileRef = doc(db, `/artifacts/${appId}/users/${user.uid}/profiles/main_profile`);
+        await setDoc(profileRef, {
+          uid: user.uid,
+          firstName,
+          lastName,
+          email: user.email,
+          photoURL: finalPhotoURL,
+          editsRemaining: 3,
+          locked: false,
+          lastUpdate: new Date().toISOString()
+        }, { merge: true });
+
+        showMessage("Success", `Account created — welcome, ${firstName}!`);
+      } catch (err) {
+        console.error("Registration error:", err);
+        showMessage("Registration Failed", err.message || String(err));
+      }
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        showMessage("Login Success", "Welcome back!");
+      } catch (err) {
+        console.error("Login error:", err);
+        showMessage("Login Failed", err.message || String(err));
+      }
+    }
+
+    async function handleSignOut() {
+      try {
+        await signOut(auth);
+        showMessage("Signed Out", "You have successfully signed out.");
+      } catch (err) {
+        console.error("Sign out error:", err);
+        showMessage("Error", "Failed to sign out. " + (err.message || err));
+      }
+    }
+
+    // ---------- Profile edit flow ----------
+    toggleEditBtn?.addEventListener('click', () => {
+      editPanel.classList.toggle('hidden');
+      // Fill current values into edit form (these values set in onAuthStateChanged)
+      editFirstName.value = document.getElementById('fullNameDisplay').textContent.split(' ')[0] || "";
+      const nameParts = document.getElementById('fullNameDisplay').textContent.split(' ');
+      editLastName.value = nameParts.slice(1).join(' ') || "";
+      editImage.value = profileImageDisplay.src || "";
+    });
+
+    cancelEditBtn?.addEventListener('click', () => editPanel.classList.add('hidden'));
+
+    // Save profile changes (consumes 1 edit on success)
+    editForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const user = auth.currentUser;
+      if (!user) { showMessage("Error", "No authenticated user."); return; }
+
+      // Read latest profile doc to check editsRemaining and locked
+      const profileRef = doc(db, `/artifacts/${appId}/users/${user.uid}/profiles/main_profile`);
+      try {
+        const snap = await getDoc(profileRef);
+        if (!snap.exists()) {
+          showMessage("Error", "Profile not found.");
+          return;
+        }
+        const data = snap.data();
+        if (data.locked) {
+          // If locked server-side, sign out and show locked view
+          await signOut(auth);
+          showLockedState();
+          return;
+        }
+
+        let editsLeft = typeof data.editsRemaining === 'number' ? data.editsRemaining : 3;
+        if (editsLeft <= 0) {
+          // Lock account
+          await updateDoc(profileRef, { locked: true });
+          await signOut(auth);
+          showLockedState();
+          return;
+        }
+
+        // Prepare new values
+        const newFirst = editFirstName.value.trim();
+        const newLast = editLastName.value.trim();
+        const newPhoto = editImage.value.trim() || PLACEHOLDER_IMG.replace('text=U', `text=${newFirst.substring(0,1).toUpperCase()}`);
+
+        // 1) Update auth profile (so displayName/photoURL updated)
+        await updateProfile(user, { displayName: `${newFirst} ${newLast}`, photoURL: newPhoto });
+
+        // 2) Update Firestore: decrement editsRemaining and update fields
+        const newEdits = editsLeft - 1;
+        const updates = {
+          firstName: newFirst,
+          lastName: newLast,
+          photoURL: newPhoto,
+          editsRemaining: newEdits,
+          lastUpdate: new Date().toISOString()
+        };
+
+        if (newEdits <= 0) {
+          updates.locked = true; // lock if reached zero
+        }
+
+        await updateDoc(profileRef, updates);
+
+        // Update UI
+        profileImageDisplay.src = newPhoto;
+        fullNameDisplay.textContent = `${newFirst} ${newLast}`;
+        editsRemainingDisplay.textContent = newEdits;
+
+        editPanel.classList.add('hidden');
+        showMessage("Saved", `Profile updated. Edits remaining: ${newEdits}`);
+
+        // If locked now, sign out and show locked view
+        if (updates.locked) {
+          await signOut(auth);
+          showLockedState();
+        }
+      } catch (err) {
+        console.error("Error saving profile:", err);
+        showMessage("Save Failed", err.message || String(err));
+      }
+    });
+
+    // Locked view handler
+    function showLockedState() {
+      hideAllViews();
+      lockedView.classList.remove('hidden');
+    }
+    lockedSignOutBtn?.addEventListener('click', () => {
+      // Just hide message; account is locked and user won't be signed in.
+      messageBox.classList.add('hidden');
+      messageBox.classList.remove('flex');
+    });
+
+    // ---------- Initialize Firebase & Auth listener ----------
+    async function initializeFirebase() {
+      try {
+        if (!firebaseConfig || Object.keys(firebaseConfig).length === 0) {
+          hideAllViews();
+          signedOutView.classList.remove('hidden');
+          showMessage("Error", "Firebase configuration is missing. Put config in __firebase_config or provide inlined config.");
+          return;
+        }
+
+        app = initializeApp(firebaseConfig);
+        auth = getAuth(app);
+        db = getFirestore(app);
+
+        if (initialAuthToken) {
+          try { await signInWithCustomToken(auth, initialAuthToken); }
+          catch (err) { console.log("Custom token sign-in skipped:", err); }
+        }
+
+        onAuthStateChanged(auth, async (user) => {
+          hideAllViews();
+          updateHeader(user);
+
+          if (!user) {
+            // Signed out
+            signedOutView.classList.remove('hidden');
+            showLoginForm();
+            return;
+          }
+
+          // Signed in -> read profile doc to check editsRemaining / locked
+          try {
+            const profileRef = doc(db, `/artifacts/${appId}/users/${user.uid}/profiles/main_profile`);
+            const snap = await getDoc(profileRef);
+
+            // If profile doc missing, create a basic one (so we always have editsRemaining)
+            if (!snap.exists()) {
+              const nameGuess = user.email ? user.email.split('@')[0] : 'Builder';
+              const first = nameGuess.split('.')[0] || nameGuess;
+              const last = nameGuess.split('.')[1] || '';
+              const defaultPhoto = user.photoURL || PLACEHOLDER_IMG.replace('text=U', `text=${first.substring(0,1).toUpperCase()}`);
+              await setDoc(profileRef, {
+                uid: user.uid,
+                firstName: first,
+                lastName: last,
+                email: user.email,
+                photoURL: defaultPhoto,
+                editsRemaining: 3,
+                locked: false,
+                lastUpdate: new Date().toISOString()
+              }, { merge: true });
+            }
+
+            // Re-read doc to get up-to-date values
+            const freshSnap = await getDoc(profileRef);
+            const profileData = freshSnap.exists() ? freshSnap.data() : null;
+            if (profileData?.locked) {
+              // If locked, force sign out and show locked view
+              await signOut(auth);
+              showLockedState();
+              return;
+            }
+
+            // Show signed-in UI
+            signedInView.classList.remove('hidden');
+
+            const displayName = user.displayName || `${profileData?.firstName || 'Builder'} ${profileData?.lastName || ''}`.trim();
+            const photoURL = user.photoURL || profileData?.photoURL || PLACEHOLDER_IMG;
+
+            profileImageDisplay.src = photoURL;
+            profileImageDisplay.onerror = () => profileImageDisplay.src = PLACEHOLDER_IMG;
+            fullNameDisplay.textContent = displayName;
+            userEmailDisplay.textContent = user.email || 'N/A';
+            editsRemainingDisplay.textContent = typeof profileData?.editsRemaining === 'number' ? profileData.editsRemaining : 3;
+            welcomeTitle.textContent = `Welcome, ${displayName.split(' ')[0]}!`;
+
+          } catch (err) {
+            console.error("Error loading profile in onAuthStateChanged:", err);
+            signedOutView.classList.remove('hidden');
+            showMessage("Error", "Failed to load profile: " + (err.message || String(err)));
+          }
+        });
+
+      } catch (err) {
+        console.error("Firebase init error:", err);
+        hideAllViews();
+        signedOutView.classList.remove('hidden');
+        showMessage("Initialization Error", err.message || String(err));
+      }
+    }
+
+    // ---------- UI event bindings ----------
+    document.addEventListener('DOMContentLoaded', () => {
+      loginForm?.addEventListener('submit', handleLogin);
+      registerForm?.addEventListener('submit', handleRegistration);
+      signOutBtn?.addEventListener('click', handleSignOut);
+
+      showRegisterBtn?.addEventListener('click', (e) => { e.preventDefault(); showRegisterForm(); });
+      showLoginBtn?.addEventListener('click', (e) => { e.preventDefault(); showLoginForm(); });
+
+      // Start app
+      initializeFirebase();
+    });
+
+  </script>
+</body>
+</html>
