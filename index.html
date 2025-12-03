@@ -1,370 +1,960 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PC Builder - Get Your Perfect PC Today</title>
-    <!-- Load Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Use Inter font family -->
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #000;
-            color: #fff;
-            overflow-x: hidden;
-        }
-
-        /* Custom Hover Effect for Primary Button (matches the look of the uploaded image) */
-        .btn-primary {
-            transition: all 0.2s ease-in-out;
-            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
-        }
-        .btn-primary:hover {
-            background-color: #333;
-            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
-            transform: translateY(-2px);
-        }
-
-        /* Custom Hover Effect for Secondary Button */
-        .btn-secondary {
-            transition: all 0.2s ease-in-out;
-            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
-            background-color: transparent;
-        }
-        .btn-secondary:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
-            transform: translateY(-2px);
-        }
-
-        /* Component Card Hover Effect (using JS for dynamic glow/move) */
-        .component-card {
-            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
-            position: relative;
-            /* Initial white border glow effect (subtle) */
-            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
-        }
-        .component-card-text {
-            /* Text opacity for the ghosted look */
-            opacity: 0.8;
-            transition: opacity 0.3s ease-out;
-        }
-
-        /* Utility classes for GSAP effects (added via JS) */
-        .hover-lift {
-            transform: translateY(-5px) !important;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 255, 255, 0.2) !important;
-        }
-        .hover-text-solid {
-            opacity: 1 !important;
-        }
-
-    </style>
-    <!-- Load GSAP for advanced animations -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="ha.webp" type="image/x-icon">
+  <title>Carrot - Healthy Foods</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          keyframes: {
+            float: {
+              '0%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-20px)' },
+              '100%': { transform: 'translateY(0px)' },
+            },
+          },
+          animation: {
+            float: 'float infinite ease-in-out',
+          },
+        },
+      }
+    }
+  </script>
 </head>
-<body class="bg-white text-gray-900">
+<body class="bg-gray-100">
 
-    <!-- Header / Navigation Bar -->
-    <header class="fixed top-0 left-0 w-full z-10 bg-black/80 backdrop-blur-sm">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="text-xl font-extrabold text-white">PC BUILDER</div>
-            <nav class="hidden md:flex space-x-6 text-sm font-medium text-gray-400">
-                <a href="prebuilt.html" class="hover:text-white transition duration-200">Pre-Built</a>
-                <a href="3dpcbuilder.html" class="hover:text-white transition duration-200">Build Your Own</a>
-                <a href="component.html" class="hover:text-white transition duration-200">Components</a>
-                <a href="blog.html" class="hover:text-white transition duration-200">Blog</a>
-            </nav>
-           <a href="loginandprofilemanagement.html"><button  class="px-4 py-2 bg-white text-black font-semibold rounded-md text-sm hover:bg-gray-200 transition duration-200">Log In</button></a> 
+<!-- Full Header -->
+<header class="shadow-md">
+
+  <!-- Top Navbar: Logo + Buy Now -->
+  <div class="bg-gray-900 text-white flex justify-between items-center px-6 py-3">
+    <div class="text-2xl font-bold">Carrot</div>
+    <button class="bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded transition">signup/login</button>
+  </div>
+
+  <!-- Middle Navbar: Logo + Search + Account/Wishlist/Cart -->
+  <div class="bg-white text-black flex justify-between items-center px-6 py-3 border-b">
+    <!-- Logo -->
+    <div class="flex items-center">
+      <img src="make carrot logo.jpg" alt="Carrot Logo" class="h-10 mr-4">
+    </div>
+    <!-- Search -->
+    <div class="flex items-center gap-2">
+      <input type="text" placeholder="Search fruits, vegetables..." id="searchInput" class="border rounded px-3 py-2 w-60 focus:outline-none focus:ring-2 focus:ring-orange-500">
+      <button onclick="performSearch()" class="bg-orange-500 hover:bg-orange-600 text-white px-3 py-2 rounded">🔍</button>
+    </div>
+    <!-- Account/Wishlist/Cart -->
+    <div class="flex gap-3">
+      <a href="account.html" class="flex flex-col items-center hover:text-orange-500 transition">
+  <span class="text-xl">👤</span>
+  <span class="text-sm">Account</span>
+</a>
+
+
+
+      <button id="wishlistBtn" class="px-4 py-2 text-black hover:text-orange-500">
+  ❤️ Wishlist
+</button>
+
+      <button class="border px-3 py-2 rounded hover:bg-black hover:text-white transition">🛒 Cart</button>
+    </div>
+  </div>
+
+  <!-- Bottom Navbar: Menu with Dropdowns -->
+  <nav class="bg-orange-500 px-6 py-3 relative z-50">
+    <ul class="flex gap-6">
+      <!-- Home -->
+      <li class="relative group">
+        <button class="text-white font-semibold px-3 py-2 rounded hover:bg-orange-600 transition">Home ▼</button>
+        <ul class="absolute left-0 top-full mt-1 bg-white text-black rounded shadow-lg hidden group-hover:block z-50">
+          <li><a href="#" class="block px-4 py-2 hover:bg-orange-500 hover:text-white">Home 1</a></li>
+          <li><a href="#" class="block px-4 py-2 hover:bg-orange-500 hover:text-white">Home 2</a></li>
+          <li><a href="#" class="block px-4 py-2 hover:bg-orange-500 hover:text-white">Home 3</a></li>
+        </ul>
+      </li>
+      <!-- Category -->
+      <li class="relative group">
+        <button class="text-white font-semibold px-3 py-2 rounded hover:bg-orange-600 transition">Category ▼</button>
+        <ul class="absolute left-0 top-full mt-1 bg-white text-black rounded shadow-lg hidden group-hover:block z-50">
+          <li><a href="#" class="block px-4 py-2 hover:bg-orange-500 hover:text-white">Fruits</a></li>
+          <li><a href="#" class="block px-4 py-2 hover:bg-orange-500 hover:text-white">Vegetables</a></li>
+          <li><a href="#" class="block px-4 py-2 hover:bg-orange-500 hover:text-white">Healthy Snacks</a></li>
+        </ul>
+      </li>
+      <!-- Product Pages -->
+      <li class="relative group">
+        <button class="text-white font-semibold px-3 py-2 rounded hover:bg-orange-600 transition">Product Pages ▼</button>
+        <ul class="absolute left-0 top-full mt-1 bg-white text-black rounded shadow-lg hidden group-hover:block z-50">
+          <li><a href="#" class="block px-4 py-2 hover:bg-orange-500 hover:text-white">Product 1</a></li>
+          <li><a href="#" class="block px-4 py-2 hover:bg-orange-500 hover:text-white">Product 2</a></li>
+        </ul>
+      </li>
+      <!-- Blog -->
+      <li class="relative group">
+        <button class="text-white font-semibold px-3 py-2 rounded hover:bg-orange-600 transition">Blog ▼</button>
+        <ul class="absolute left-0 top-full mt-1 bg-white text-black rounded shadow-lg hidden group-hover:block z-50">
+          <li><a href="#" class="block px-4 py-2 hover:bg-orange-500 hover:text-white">Blog Post 1</a></li>
+          <li><a href="#" class="block px-4 py-2 hover:bg-orange-500 hover:text-white">Blog Post 2</a></li>
+        </ul>
+      </li>
+      <!-- Elements -->
+      <li class="relative group">
+        <button class="text-white font-semibold px-3 py-2 rounded hover:bg-orange-600 transition">Elements ▼</button>
+        <ul class="absolute left-0 top-full mt-1 bg-white text-black rounded shadow-lg hidden group-hover:block z-50">
+          <li><a href="#" class="block px-4 py-2 hover:bg-orange-500 hover:text-white">Button Styles</a></li>
+          <li><a href="#" class="block px-4 py-2 hover:bg-orange-500 hover:text-white">Cards</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<!-- Hero Section -->
+<section class="relative w-full h-screen bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=1950&q=80');">
+  
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+
+  <!-- Content -->
+  <div class="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
+    <h1 class="text-5xl md:text-6xl font-bold text-white mb-4">Fresh Fruits & Vegetables Delivered</h1>
+    <p class="text-xl md:text-2xl text-white mb-8">Eat healthy, live healthy. Explore our organic collection today!</p>
+    <button class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded text-lg transition">Shop Now</button>
+  </div>
+
+  <!-- Infinite Scroll Elements -->
+  <div id="floating-elements" class="absolute inset-0 overflow-hidden"></div>
+</section>
+
+<!-- Card Section -->
+<section class="py-16 bg-gray-100">
+  <div class="container mx-auto px-6">
+    <h2 class="text-3xl font-bold text-center mb-10">Our Fresh Products</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+      <!-- First Card: Buttons -->
+      <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col gap-4">
+        <h3 class="text-xl font-semibold mb-4">Choose Category</h3>
+        <button onclick="updateCards('vegetables')" class="bg-white text-black border border-gray-300 hover:bg-black hover:text-white px-4 py-2 rounded transition">Fresh Vegetables & Fruits</button>
+        <button onclick="updateCards('apple')" class="bg-white text-black border border-gray-300 hover:bg-black hover:text-white px-4 py-2 rounded transition">Apple</button>
+        <button onclick="updateCards('mango')" class="bg-white text-black border border-gray-300 hover:bg-black hover:text-white px-4 py-2 rounded transition">Mango</button>
+        <button onclick="updateCards('strawberry')" class="bg-white text-black border border-gray-300 hover:bg-black hover:text-white px-4 py-2 rounded transition">Strawberry</button>
+      </div>
+
+      <!-- Second Card: Image -->
+      <div id="card1" class="bg-white rounded-lg shadow-lg p-4 flex items-center justify-center">
+        <img src="images (2).jpg" alt="" class="rounded-lg">
+      </div>
+
+      <!-- Third Card: Image -->
+      <div id="card2" class="bg-white rounded-lg shadow-lg p-4 flex items-center justify-center">
+        <img src="ve.jpg" alt="" class="rounded-lg">
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Popular Products Section -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-6">
+    <h2 class="text-3xl font-bold text-center mb-10">Popular Products</h2>
+
+    <!-- Grid of products -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8" id="productGrid">
+      <!-- Product Card 1 -->
+      <div class="bg-gray-100 rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition p-4">
+        <img src="aple.avif" alt="Apples" class="w-full h-48 object-cover mb-4 rounded-lg">
+        <h3 class="text-xl font-semibold mb-2">Fresh Apples</h3>
+        <p class="text-gray-700 mb-2">Crisp and juicy apples directly from the farm.</p>
+        <div class="flex items-center mb-2 text-yellow-400">★★★★☆</div>
+        <p class="text-lg font-bold mb-2">$4.99 / kg</p>
+        <button class="addToCart bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded w-full transition"
+          data-name="Fresh Apples" data-price="4.99">Add to Cart</button>
+      </div>
+
+      <!-- Product Card 2 -->
+      <div class="bg-gray-100 rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition p-4">
+        <img src="images.jpg" alt="Mangoes" class="w-full h-48 object-cover mb-4 rounded-lg">
+        <h3 class="text-xl font-semibold mb-2">Organic Mangoes</h3>
+        <p class="text-gray-700 mb-2">Sweet and ripe mangoes, perfect for smoothies.</p>
+        <div class="flex items-center mb-2 text-yellow-400">★★★★★</div>
+        <p class="text-lg font-bold mb-2">$6.99 / kg</p>
+        <button class="addToCart bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded w-full transition"
+          data-name="Organic Mangoes" data-price="6.99">Add to Cart</button>
+      </div>
+
+      <!-- Product Card 3 -->
+      <div class="bg-gray-100 rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition p-4">
+        <img src="images (3).jpg" alt="Strawberries" class="w-full h-48 object-cover mb-4 rounded-lg">
+        <h3 class="text-xl font-semibold mb-2">Strawberries</h3>
+        <p class="text-gray-700 mb-2">Freshly picked strawberries, sweet and juicy.</p>
+        <div class="flex items-center mb-2 text-yellow-400">★★★★☆</div>
+        <p class="text-lg font-bold mb-2">$5.99 / kg</p>
+        <button class="addToCart bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded w-full transition"
+          data-name="Strawberries" data-price="5.99">Add to Cart</button>
+      </div>
+
+      <!-- Product Card 4 -->
+      <div class="bg-gray-100 rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition p-4">
+        <img src="bananas-1354785_1920-1024x683.avif" alt="Bananas" class="w-full h-48 object-cover mb-4 rounded-lg">
+        <h3 class="text-xl font-semibold mb-2">Bananas</h3>
+        <p class="text-gray-700 mb-2">Ripe bananas, perfect for a healthy snack.</p>
+        <div class="flex items-center mb-2 text-yellow-400">★★★★★</div>
+        <p class="text-lg font-bold mb-2">$2.99 / kg</p>
+        <button class="addToCart bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded w-full transition"
+          data-name="Bananas" data-price="2.99">Add to Cart</button>
+      </div>
+
+      <!-- Product Card 5 -->
+      <div class="bg-gray-100 rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition p-4">
+        <img src="images (5).jpg" alt="Grapes" class="w-full h-48 object-cover mb-4 rounded-lg">
+        <h3 class="text-xl font-semibold mb-2">Grapes</h3>
+        <p class="text-gray-700 mb-2">Fresh green grapes full of flavor and nutrients.</p>
+        <div class="flex items-center mb-2 text-yellow-400">★★★★☆</div>
+        <p class="text-lg font-bold mb-2">$3.99 / kg</p>
+        <button class="addToCart bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded w-full transition"
+          data-name="Grapes" data-price="3.99">Add to Cart</button>
+      </div>
+
+      <!-- Product Card 6 -->
+      <div class="bg-gray-100 rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition p-4">
+        <img src="photo.avif" alt="Oranges" class="w-full h-48 object-cover mb-4 rounded-lg">
+        <h3 class="text-xl font-semibold mb-2">Oranges</h3>
+        <p class="text-gray-700 mb-2">Juicy oranges packed with vitamin C for your health.</p>
+        <div class="flex items-center mb-2 text-yellow-400">★★★★★</div>
+        <p class="text-lg font-bold mb-2">$4.49 / kg</p>
+        <button class="addToCart bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded w-full transition"
+          data-name="Oranges" data-price="4.49">Add to Cart</button>
+      </div>
+
+      <!-- Product Card 7 -->
+      <div class="bg-gray-100 rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition p-4">
+        <img src="images (4).jpg" alt="Mango Slice" class="w-full h-48 object-cover mb-4 rounded-lg">
+        <h3 class="text-xl font-semibold mb-2">Mango Slice</h3>
+        <p class="text-gray-700 mb-2">Sweet mango slices for smoothies and desserts.</p>
+        <div class="flex items-center mb-2 text-yellow-400">★★★★☆</div>
+        <p class="text-lg font-bold mb-2">$5.49 / kg</p>
+        <button class="addToCart bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded w-full transition"
+          data-name="Mango Slice" data-price="5.49">Add to Cart</button>
+      </div>
+
+      <!-- Product Card 8 -->
+      <div class="bg-gray-100 rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition p-4">
+        <img src="carrot.jpg" alt="Carrots" class="w-full h-48 object-cover mb-4 rounded-lg">
+        <h3 class="text-xl font-semibold mb-2">Organic Carrots</h3>
+        <p class="text-gray-700 mb-2">Crunchy organic carrots perfect for salads and snacks.</p>
+        <div class="flex items-center mb-2 text-yellow-400">★★★★★</div>
+        <p class="text-lg font-bold mb-2">$3.29 / kg</p>
+        <button  class="addToCart bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded w-full transition" 
+          data-name="Organic Carrots" data-price="3.29">Add to Cart</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+<!-- CART SIDEBAR -->
+<div id="cartSidebar"
+     class="fixed right-0 top-0 h-full w-80 bg-white shadow-xl transform translate-x-full transition-all duration-300 z-50">
+
+  <div class="p-6 flex justify-between items-center border-b">
+    <h2 class="text-2xl font-bold">Your Cart</h2>
+    <button id="closeCart" class="text-xl font-bold">&times;</button>
+  </div>
+
+  <div id="cartItems" class="p-4 space-y-4 overflow-y-auto h-[70%]"></div>
+
+  <div class="p-4 border-t bg-gray-50">
+    <p class="text-xl font-bold mb-2">Total: $<span id="totalAmount">0.00</span></p>
+    <button class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded">
+      Checkout
+    </button>
+  </div>
+</div>
+
+<!-- Animated Stats Section -->
+<section class="py-16 bg-gray-50">
+  <div class="container mx-auto px-6 text-center">
+    <h2 class="text-3xl font-bold mb-12">Our Impact in Numbers</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+
+      <div class="bg-white p-6 rounded-lg shadow hover:shadow-xl transition">
+        <h3 class="text-4xl font-bold text-orange-500 mb-2 count" data-target="5000">0</h3>
+        <p class="text-gray-700">Happy Customers</p>
+      </div>
+
+      <div class="bg-white p-6 rounded-lg shadow hover:shadow-xl transition">
+        <h3 class="text-4xl font-bold text-orange-500 mb-2 count" data-target="12000">0</h3>
+        <p class="text-gray-700">Kg of Fresh Produce Sold</p>
+      </div>
+
+      <div class="bg-white p-6 rounded-lg shadow hover:shadow-xl transition">
+        <h3 class="text-4xl font-bold text-orange-500 mb-2 count" data-target="150">0</h3>
+        <p class="text-gray-700">Organic Farms Partnered</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  const counters = document.querySelectorAll(".count");
+  counters.forEach(counter => {
+    const updateCount = () => {
+      const target = +counter.getAttribute("data-target");
+      const count = +counter.innerText;
+      const speed = 50; // lower = faster
+      const increment = target / speed;
+
+      if (count < target) {
+        counter.innerText = Math.ceil(count + increment);
+        setTimeout(updateCount, 30);
+      } else {
+        counter.innerText = target;
+      }
+    };
+    updateCount();
+  });
+</script>
+
+
+
+
+<!-- Services Scroll Section -->
+<section class="py-16 bg-gray-50">
+  <div class="container mx-auto px-6">
+    <h2 class="text-3xl font-bold text-center mb-10">Our Services</h2>
+
+    <!-- Scrollable Container -->
+    <div class="flex gap-6 overflow-x-auto pb-4 scroll-smooth">
+
+      <!-- Card 1: Product Packing -->
+      <div class="min-w-[280px] bg-white shadow-lg rounded-xl p-6 flex-shrink-0 hover:shadow-2xl transition">
+        <div class="text-orange-500 text-4xl mb-3">📦</div>
+        <h3 class="text-xl font-bold mb-2">Product Packing</h3>
+        <p class="text-gray-700">We pack every product with extra care to maintain freshness.</p>
+      </div>
+
+      <!-- Card 2: 24/7 Support -->
+      <div class="min-w-[280px] bg-white shadow-lg rounded-xl p-6 flex-shrink-0 hover:shadow-2xl transition">
+        <div class="text-orange-500 text-4xl mb-3">💬</div>
+        <h3 class="text-xl font-bold mb-2">24/7 Support</h3>
+        <p class="text-gray-700">Our support team is available anytime to help you.</p>
+      </div>
+
+      <!-- Card 3: Delivery in 5 Days -->
+      <div class="min-w-[280px] bg-white shadow-lg rounded-xl p-6 flex-shrink-0 hover:shadow-2xl transition">
+        <div class="text-orange-500 text-4xl mb-3">🚚</div>
+        <h3 class="text-xl font-bold mb-2">Fast Delivery</h3>
+        <p class="text-gray-700">We deliver all your orders safely within 5 working days.</p>
+      </div>
+
+      <!-- Card 4: Secure Payment -->
+      <div class="min-w-[280px] bg-white shadow-lg rounded-xl p-6 flex-shrink-0 hover:shadow-2xl transition">
+        <div class="text-orange-500 text-4xl mb-3">🔒</div>
+        <h3 class="text-xl font-bold mb-2">Secure Payment</h3>
+        <p class="text-gray-700">Your payment is encrypted and fully protected.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Hero Section: 35% OFF Carrot Healthy Foods -->
+<section 
+  class="relative w-full py-20 bg-cover bg-center"
+  style="background-image: url('make\ a\ image\ of\ healthy\ food\ and\ vegetable\ -\ Shortcut.lnk');">
+
+  <!-- Dark Overlay -->
+  <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+
+  <!-- Content (Left-aligned) -->
+  <div class="relative z-10 container mx-auto px-6 flex justify-start text-left text-white">
+    <div class="max-w-lg">
+      <h1 class="text-5xl md:text-6xl font-bold mb-4">35% OFF Organic Foods</h1>
+      <p class="text-xl md:text-2xl mb-6">Grab the healthiest and freshest organic products today!</p>
+
+      <!-- Countdown Timer -->
+      <div class="flex gap-4 text-center mb-6">
+        <div>
+          <p id="days" class="text-4xl font-bold">00</p>
+          <span class="text-lg">Days</span>
         </div>
-    </header>
-
-    <!-- 1. Hero Section: Get Your Perfect PC Today! (From abc.png) -->
-    <section class="min-h-screen pt-24 bg-black text-white flex items-center">
-        <div class="max-w-7xl mx-auto px-6 py-12 grid md:grid-cols-2 gap-12 items-center">
-            
-            <!-- Left Content Area -->
-            <div>
-                <h1 class="text-5xl md:text-7xl font-extrabold leading-tight tracking-tighter">
-                    Get Your <br class="hidden sm:inline">
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-500">Perfect PC</span>
-                    <br class="hidden sm:inline">
-                    Today!
-                </h1>
-                <p class="mt-4 mb-8 text-lg text-gray-400">
-                    Choose from Our Pre-Built Selection or Build your Own with Your PC!
-                </p>
-
-                <!-- Call to Action Buttons -->
-                <div class="flex space-x-4">
-                    <a href="#" class="btn-primary px-6 py-3 bg-white text-black font-semibold rounded-lg">Pre-Built</a>
-                    <a href="#" class="btn-secondary px-6 py-3 text-white font-semibold rounded-lg border border-gray-700">Build it yourself</a>
-                </div>
-
-                <!-- Feature Description Grid (Similar to the text next to the buttons in the image) -->
-                <div class="mt-12 space-y-6 text-sm">
-                    <div class="flex space-x-8">
-                        <div>
-                            <h3 class="font-bold text-white mb-1">Pre-Built</h3>
-                            <p class="text-gray-400 max-w-xs">
-                                Computers that are already assembled and configured by manufacturers, ready to go out of the box.
-                            </p>
-                        </div>
-                        <div class="hidden sm:block">
-                            <h3 class="font-bold text-white mb-1">Build it yourself</h3>
-                            <p class="text-gray-400 max-w-xs">
-                                Full control over the selection of each component, allowing you to choose the best parts for your specific needs.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right Image Area (Placeholder for the exploded PC view) -->
-            <div class="relative flex justify-center items-center h-full">
-                <!-- Simplified representation of the PC case -->
-                <div class="w-full max-w-md aspect-square rounded-xl shadow-2xl bg-gray-800/50 p-6 flex flex-col justify-center items-center overflow-hidden">
-                    <div class="text-9xl text-gray-700 opacity-30 font-extrabold">PC</div>
-                    <div class="text-xl text-gray-500 mt-2">Exploded View Placeholder</div>
-                    <!-- An animated element to simulate the "exploded" parts -->
-                    <div id="pc-parts-animation" class="absolute w-full h-full"></div>
-                </div>
-            </div>
+        <div>
+          <p id="hours" class="text-4xl font-bold">00</p>
+          <span class="text-lg">Hours</span>
         </div>
-    </section>
-
-    <!-- 2. Featured PC Section: Brand new beast (From ss.png) -->
-    <section class="bg-black text-white border-t border-gray-900">
-        <div class="max-w-7xl mx-auto">
-            <div class="bg-neutral-900 rounded-lg p-10 md:p-16 flex flex-col lg:flex-row items-center justify-between">
-                
-                <!-- Left Content: Title, Features, Price, Button -->
-                <div class="lg:w-1/2">
-                    <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">Brand new beast</h2>
-                        <a href="#" class="text-sm text-gray-400 hover:text-white transition duration-200 hidden sm:block">See more &rarr;</a>
-                    </div>
-                    
-                    <ul class="space-y-3 mt-6 text-lg text-gray-300">
-                        <li class="flex items-center">
-                            <svg class="w-6 h-6 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            Premium Custom PC
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-6 h-6 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            Ready for High-Performance
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-6 h-6 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            Premium Full Steel Chassis
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-6 h-6 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            Streamer Friendly
-                        </li>
-                    </ul>
-
-                    <div class="mt-8">
-                        <p class="text-sm text-gray-500 mb-1">from</p>
-                        <div class="flex items-end space-x-2">
-                            <span class="text-6xl font-bold">$2550</span>
-                            <span class="text-lg text-green-400 mb-1">In stock</span>
-                        </div>
-                        <button class="w-40 mt-6 px-6 py-3 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition duration-200">Continue</button>
-                    </div>
-                </div>
-
-                <!-- Middle Content: Image of the PC -->
-                <div class="lg:w-1/4 my-10 lg:my-0 flex justify-center items-center">
-                    <!-- Placeholder for the RGB PC Image -->
-                    <div class="relative w-full max-w-xs aspect-square bg-gray-800 rounded-xl flex justify-center items-center shadow-lg">
-                        <div class="text-3xl font-bold text-gray-600">RGB PC</div>
-                        <!-- Simulated RGB Rings -->
-                        <div class="absolute w-20 h-20 border-4 border-red-500 rounded-full animate-spin-slow" style="animation-delay: 0s; border-color: #ef4444 transparent #ef4444 transparent;"></div>
-                        <div class="absolute w-24 h-24 border-4 border-green-500 rounded-full animate-spin-slow" style="animation-delay: 0.5s; animation-direction: reverse; border-color: #10b981 transparent #10b981 transparent;"></div>
-                        <div class="absolute w-28 h-28 border-4 border-blue-500 rounded-full animate-spin-slow" style="animation-delay: 1s; border-color: #3b82f6 transparent #3b82f6 transparent;"></div>
-                    </div>
-                </div>
-
-                <!-- Right Content: Specifications -->
-                <div class="lg:w-1/4 space-y-8 text-sm">
-                    <div>
-                        <h3 class="text-xl font-bold mb-2">Processor</h3>
-                        <p class="text-gray-400">Intel 10th Gen or</p>
-                        <p class="text-gray-400">Ryzen 3000 Processors</p>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold mb-2">Graphics Card</h3>
-                        <p class="text-gray-400">Up to the NVIDIA</p>
-                        <p class="text-gray-400">GeForce RTX 3080</p>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold mb-2">Memory</h3>
-                        <p class="text-gray-400">32 GB Ultra-fast</p>
-                        <p class="text-gray-400">3600mhz Memory</p>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold mb-2">Cooling</h3>
-                        <p class="text-gray-400">Premium Custom</p>
-                        <p class="text-gray-400">Water cooled CPU</p>
-                    </div>
-                </div>
-            </div>
+        <div>
+          <p id="minutes" class="text-4xl font-bold">00</p>
+          <span class="text-lg">Minutes</span>
         </div>
-    </section>
-
-    <!-- 3. Components Grid Section (From pp.png) -->
-    <section class="max-w-7xl mx-auto px-6 py-16">
-        <h2 class="text-4xl font-extrabold text-white mb-10">Components</h2>
-        
-        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
-            <!-- Component Card Template (8 items) -->
-            <div id="card-1" class="component-card p-4 rounded-xl cursor-pointer bg-neutral-900/50 hover:bg-neutral-800/80 flex flex-col items-center text-center">
-                <!-- Placeholder for Image -->
-                <div class="h-16 w-16 mb-2 flex items-center justify-center">
-                    <span class="text-4xl text-gray-600">💻</span>
-                </div>
-                <p class="component-card-text text-sm font-medium text-gray-400">Processors</p>
-            </div>
-            
-            <div id="card-2" class="component-card p-4 rounded-xl cursor-pointer bg-neutral-900/50 hover:bg-neutral-800/80 flex flex-col items-center text-center">
-                <div class="h-16 w-16 mb-2 flex items-center justify-center">
-                    <span class="text-4xl text-gray-600">🖨️</span>
-                </div>
-                <p class="component-card-text text-sm font-medium text-gray-400">Graphics Cards</p>
-            </div>
-
-            <div id="card-3" class="component-card p-4 rounded-xl cursor-pointer bg-neutral-900/50 hover:bg-neutral-800/80 flex flex-col items-center text-center">
-                <div class="h-16 w-16 mb-2 flex items-center justify-center">
-                    <span class="text-4xl text-gray-600">⚙️</span>
-                </div>
-                <p class="component-card-text text-sm font-medium text-gray-400">Motherboards</p>
-            </div>
-
-            <div id="card-4" class="component-card p-4 rounded-xl cursor-pointer bg-neutral-900/50 hover:bg-neutral-800/80 flex flex-col items-center text-center">
-                <div class="h-16 w-16 mb-2 flex items-center justify-center">
-                    <span class="text-4xl text-gray-600">💾</span>
-                </div>
-                <p class="component-card-text text-sm font-medium text-gray-400">Memory (RAM)</p>
-            </div>
-            
-            <div id="card-5" class="component-card p-4 rounded-xl cursor-pointer bg-neutral-900/50 hover:bg-neutral-800/80 flex flex-col items-center text-center">
-                <div class="h-16 w-16 mb-2 flex items-center justify-center">
-                    <span class="text-4xl text-gray-600">🗄️</span>
-                </div>
-                <p class="component-card-text text-sm font-medium text-gray-400">Storage</p>
-            </div>
-            
-            <div id="card-6" class="component-card p-4 rounded-xl cursor-pointer bg-neutral-900/50 hover:bg-neutral-800/80 flex flex-col items-center text-center">
-                <div class="h-16 w-16 mb-2 flex items-center justify-center">
-                    <span class="text-4xl text-gray-600">🔌</span>
-                </div>
-                <p class="component-card-text text-sm font-medium text-gray-400">Power Supply</p>
-            </div>
-            
-            <div id="card-7" class="component-card p-4 rounded-xl cursor-pointer bg-neutral-900/50 hover:bg-neutral-800/80 flex flex-col items-center text-center">
-                <div class="h-16 w-16 mb-2 flex items-center justify-center">
-                    <span class="text-4xl text-gray-600">🌬️</span>
-                </div>
-                <p class="component-card-text text-sm font-medium text-gray-400">System Cooling</p>
-            </div>
-
-            <div id="card-8" class="component-card p-4 rounded-xl cursor-pointer bg-neutral-900/50 hover:bg-neutral-800/80 flex flex-col items-center text-center">
-                <div class="h-16 w-16 mb-2 flex items-center justify-center">
-                    <span class="text-4xl text-gray-600">🖱️</span>
-                </div>
-                <p class="component-card-text text-sm font-medium text-gray-400">Peripherals</p>
-            </div>
-
+        <div>
+          <p id="seconds" class="text-4xl font-bold">00</p>
+          <span class="text-lg">Seconds</span>
         </div>
-    </section>
+      </div>
 
-    <!-- Simple Footer for separation -->
-    <footer class="py-6 border-t border-gray-900 bg-black">
-        <div class="max-w-7xl mx-auto px-6 text-center text-sm text-gray-500">
-            &copy; 2024 PC Builder. All Rights Reserved.
+      <!-- CTA Button -->
+      <button class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded text-lg transition">
+        Shop Now
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-6">
+    <h2 class="text-3xl font-bold text-center mb-10">Build Your Box 🥦🍎</h2>
+    <div class="flex flex-col md:flex-row gap-6">
+      <!-- Product Selection -->
+      <div class="flex-1 bg-gray-100 p-6 rounded-lg shadow-lg">
+        <h3 class="text-xl font-semibold mb-4">Choose Products</h3>
+        <div class="space-y-2">
+          <label class="flex items-center gap-2"><input type="checkbox" class="w-5 h-5"> Apples</label>
+          <label class="flex items-center gap-2"><input type="checkbox" class="w-5 h-5"> Carrots</label>
+          <label class="flex items-center gap-2"><input type="checkbox" class="w-5 h-5"> Mangoes</label>
+          <label class="flex items-center gap-2"><input type="checkbox" class="w-5 h-5"> Strawberries</label>
         </div>
-    </footer>
+      </div>
+      <!-- Summary / Add Button -->
+      <div class="flex-1 bg-gray-100 p-6 rounded-lg shadow-lg flex flex-col justify-between">
+        <h3 class="text-xl font-semibold mb-4">Your Box</h3>
+        <ul id="customBoxList" class="mb-4 text-gray-700 space-y-1">
+          <li>No products selected</li>
+        </ul>
+        <button id="addBoxBtn" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded w-full transition">Add Box to Cart</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+const list = document.getElementById('customBoxList');
+checkboxes.forEach(cb => cb.addEventListener('change', updateBox));
+
+function updateBox() {
+  const selected = Array.from(checkboxes).filter(c => c.checked).map(c => c.parentNode.textContent.trim());
+  list.innerHTML = selected.length ? selected.map(item => `<li>${item}</li>`).join('') : '<li>No products selected</li>';
+}
+document.getElementById('addBoxBtn').addEventListener('click', () => alert('Box added to cart!'));
+</script>
 
 
-    <script>
-        // --- Custom Interactive JavaScript / GSAP Effects ---
+<!-- Testimonials Section -->
+<section class="py-16 bg-gray-100">
+  <div class="container mx-auto px-6">
+    <h2 class="text-3xl font-bold text-center mb-12">What People Say About Carrot Healthy Foods</h2>
 
-        document.addEventListener('DOMContentLoaded', () => {
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-            // 1. Component Card Hover Effect (Matches the "ghosted" appearance becoming solid on hover)
-            const componentCards = document.querySelectorAll('.component-card');
-            
-            componentCards.forEach(card => {
-                const textElement = card.querySelector('.component-card-text');
-                
-                // Add event listeners for hover effects
-                card.addEventListener('mouseenter', () => {
-                    // Lift and add shadow
-                    gsap.to(card, {
-                        y: -5,
-                        boxShadow: '0 10px 20px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.3)',
-                        duration: 0.3,
-                        ease: "power2.out"
-                    });
-                    // Make text fully solid
-                    gsap.to(textElement, {
-                        opacity: 1,
-                        duration: 0.2
-                    });
-                });
+      <!-- Card 1 -->
+      <div class="bg-white shadow-lg rounded-lg p-6 text-center hover:shadow-2xl transition">
+        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Person 1" class="w-20 h-20 mx-auto rounded-full mb-4">
+        <h3 class="text-xl font-semibold mb-2">Sarah Williams</h3>
+        <p class="text-gray-700 mb-3">"The fresh fruits and vegetables from Carrot are amazing. I feel healthier every day!"</p>
+        <div class="flex justify-center text-yellow-400">
+          <span>★★★★★</span>
+        </div>
+      </div>
 
-                card.addEventListener('mouseleave', () => {
-                    // Return to original state
-                    gsap.to(card, {
-                        y: 0,
-                        boxShadow: '0 0 0 1px rgba(255, 255, 255, 0.1)',
-                        duration: 0.3,
-                        ease: "power2.out"
-                    });
-                    // Re-ghost the text
-                    gsap.to(textElement, {
-                        opacity: 0.8,
-                        duration: 0.2
-                    });
-                });
-            });
+      <!-- Card 2 -->
+      <div class="bg-white shadow-lg rounded-lg p-6 text-center hover:shadow-2xl transition">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Person 2" class="w-20 h-20 mx-auto rounded-full mb-4">
+        <h3 class="text-xl font-semibold mb-2">John Doe</h3>
+        <p class="text-gray-700 mb-3">"I love the organic products. Delivery is fast and everything is perfectly packed."</p>
+        <div class="flex justify-center text-yellow-400">
+          <span>★★★★☆</span>
+        </div>
+      </div>
 
-            // 2. Exploded PC View Animation Placeholder (Subtle background movement)
-            const animationContainer = document.getElementById('pc-parts-animation');
-            if (animationContainer) {
-                // Create small animated squares to simulate floating parts
-                for (let i = 0; i < 5; i++) {
-                    const part = document.createElement('div');
-                    part.className = 'absolute bg-white/10 rounded-sm';
-                    part.style.width = `${gsap.utils.random(5, 15)}px`;
-                    part.style.height = `${gsap.utils.random(5, 15)}px`;
-                    animationContainer.appendChild(part);
+      <!-- Card 3 -->
+      <div class="bg-white shadow-lg rounded-lg p-6 text-center hover:shadow-2xl transition">
+        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Person 3" class="w-20 h-20 mx-auto rounded-full mb-4">
+        <h3 class="text-xl font-semibold mb-2">Emily Johnson</h3>
+        <p class="text-gray-700 mb-3">"Carrot Healthy Foods has changed the way I eat. Fresh, delicious, and reliable!"</p>
+        <div class="flex justify-center text-yellow-400">
+          <span>★★★★★</span>
+        </div>
+      </div>
 
-                    gsap.set(part, {
-                        x: gsap.utils.random(0, animationContainer.clientWidth),
-                        y: gsap.utils.random(0, animationContainer.clientHeight),
-                        rotation: gsap.utils.random(0, 360),
-                        opacity: 0.3
-                    });
+    </div>
+  </div>
+</section>
 
-                    // Animate the parts to move slowly and loop infinitely
-                    gsap.to(part, {
-                        x: `+=${gsap.utils.random(-100, 100)}`,
-                        y: `+=${gsap.utils.random(-100, 100)}`,
-                        rotation: '+=360',
-                        opacity: gsap.utils.random(0.2, 0.6),
-                        duration: gsap.utils.random(10, 20),
-                        ease: "sine.inOut",
-                        repeat: -1,
-                        yoyo: true
-                    });
-                }
-            }
+<!-- Loyalty Points Section -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-6 text-center">
+    <h2 class="text-3xl font-bold mb-6">Earn Loyalty Points</h2>
+    <p class="text-gray-700 mb-8">Shop more, earn more! Redeem your points for discounts on your favorite organic products.</p>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+      <div class="bg-gray-100 p-6 rounded-lg shadow hover:shadow-xl transition transform hover:scale-105">
+        <div class="text-4xl text-orange-500 mb-4">🛒</div>
+        <h3 class="text-xl font-semibold mb-2">1 Point / $1</h3>
+        <p class="text-gray-600">Every dollar spent earns you loyalty points.</p>
+      </div>
+      <div class="bg-gray-100 p-6 rounded-lg shadow hover:shadow-xl transition transform hover:scale-105">
+        <div class="text-4xl text-orange-500 mb-4">🎁</div>
+        <h3 class="text-xl font-semibold mb-2">Redeem Rewards</h3>
+        <p class="text-gray-600">Use points to get discounts on your next purchase.</p>
+      </div>
+      <div class="bg-gray-100 p-6 rounded-lg shadow hover:shadow-xl transition transform hover:scale-105">
+        <div class="text-4xl text-orange-500 mb-4">⭐</div>
+        <h3 class="text-xl font-semibold mb-2">Exclusive Offers</h3>
+        <p class="text-gray-600">Loyal customers get access to special deals and promotions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-16 bg-gray-50">
+  <div class="container mx-auto px-6 text-center">
+    <h2 class="text-3xl font-bold mb-10">🌱 Our Eco Impact</h2>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div class="p-6 bg-white rounded-lg shadow-lg">
+        <p class="text-4xl font-bold text-green-600" id="co2Saved">0</p>
+        <p class="mt-2 text-gray-700">kg CO₂ Saved</p>
+      </div>
+      <div class="p-6 bg-white rounded-lg shadow-lg">
+        <p class="text-4xl font-bold text-green-600" id="treesPlanted">0</p>
+        <p class="mt-2 text-gray-700">Trees Planted</p>
+      </div>
+      <div class="p-6 bg-white rounded-lg shadow-lg">
+        <p class="text-4xl font-bold text-green-600" id="organicDelivered">0</p>
+        <p class="mt-2 text-gray-700">kg Organic Products Delivered</p>
+      </div>
+      <div class="p-6 bg-white rounded-lg shadow-lg">
+        <p class="text-4xl font-bold text-green-600" id="customersHappy">0</p>
+        <p class="mt-2 text-gray-700">Happy Customers</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+function animateCounter(id, end) {
+  let count = 0;
+  const interval = setInterval(() => {
+    count += Math.ceil(end/100);
+    if(count >= end){ count = end; clearInterval(interval); }
+    document.getElementById(id).innerText = count;
+  }, 20);
+}
+
+animateCounter('co2Saved', 1500);
+animateCounter('treesPlanted', 120);
+animateCounter('organicDelivered', 5000);
+animateCounter('customersHappy', 350);
+</script>
+
+
+<section class="py-16 bg-gray-50">
+  <div class="container mx-auto px-6 text-center">
+    <h2 class="text-3xl font-bold mb-10">Which Smoothie Suits You? 🥤</h2>
+    <div id="quiz" class="space-y-4 max-w-md mx-auto">
+      <div>
+        <p>1. Choose your favorite flavor:</p>
+        <select id="q1" class="border rounded px-3 py-2 w-full">
+          <option value="">Select</option>
+          <option value="fruity">Fruity</option>
+          <option value="green">Green</option>
+          <option value="tropical">Tropical</option>
+        </select>
+      </div>
+      <div>
+        <p>2. Pick a health goal:</p>
+        <select id="q2" class="border rounded px-3 py-2 w-full">
+          <option value="">Select</option>
+          <option value="energy">Energy Boost</option>
+          <option value="detox">Detox</option>
+          <option value="immune">Immune Support</option>
+        </select>
+      </div>
+      <button id="quizBtn" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded w-full transition">See Recommendation</button>
+    </div>
+    <p id="quizResult" class="mt-4 font-bold text-lg text-orange-600"></p>
+  </div>
+</section>
+
+<script>
+document.getElementById('quizBtn').addEventListener('click', () => {
+  const q1 = document.getElementById('q1').value;
+  const q2 = document.getElementById('q2').value;
+  if(!q1 || !q2){ alert('Please answer both questions!'); return; }
+
+  let result = '';
+  if(q1 === 'fruity' && q2 === 'energy') result = 'Strawberry Banana Smoothie 🍓🍌';
+  else if(q1 === 'green' && q2 === 'detox') result = 'Green Detox Smoothie 🥬🥒';
+  else if(q1 === 'tropical' && q2 === 'immune') result = 'Mango Immunity Smoothie 🥭🍊';
+  else result = 'Mixed Fruit Smoothie 🍎🍍';
+
+  document.getElementById('quizResult').innerText = `We recommend: ${result}`;
+});
+</script>
+
+
+<section class="py-16 bg-gray-50">
+  <div class="container mx-auto px-6 text-center">
+    <h2 class="text-3xl font-bold mb-10">Weekly Subscription Box 📦</h2>
+    <p class="text-gray-700 mb-6">Get fresh fruits & vegetables delivered to your door every week.</p>
+    <div class="flex flex-col md:flex-row justify-center gap-6">
+      <div class="bg-white p-6 rounded-lg shadow-lg flex-1">
+        <h3 class="text-xl font-semibold mb-2">Basic Box</h3>
+        <p class="text-gray-700 mb-4">5-6 types of fresh fruits & veggies</p>
+        <p class="text-lg font-bold mb-4">$25/week</p>
+        <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded w-full transition">Subscribe</button>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-lg flex-1">
+        <h3 class="text-xl font-semibold mb-2">Family Box</h3>
+        <p class="text-gray-700 mb-4">10+ types of fresh fruits & veggies</p>
+        <p class="text-lg font-bold mb-4">$45/week</p>
+        <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded w-full transition">Subscribe</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="py-16 bg-cover bg-center relative" style="background-image: url('land.jpg');">
+  <div class="container mx-auto px-6 relative z-10">
+    <h2 class="text-3xl font-bold text-center mb-10 text-white">Farm to Table 🌾➡️🍽️</h2>
+    <div class="relative border-l-2 border-orange-500 ml-4">
+      <div class="mb-8 ml-6">
+        <div class="bg-orange-500 w-4 h-4 rounded-full -left-3 absolute mt-1"></div>
+        <h3 class="font-semibold text-xl text-white">Harvesting</h3>
+        <p class="text-white text-opacity-90">Fresh produce is carefully harvested from local farms.</p>
+      </div>
+      <div class="mb-8 ml-6">
+        <div class="bg-orange-500 w-4 h-4 rounded-full -left-3 absolute mt-1"></div>
+        <h3 class="font-semibold text-xl text-white">Packing</h3>
+        <p class="text-white text-opacity-90">Products are packed with care to maintain freshness.</p>
+      </div>
+      <div class="mb-8 ml-6">
+        <div class="bg-orange-500 w-4 h-4 rounded-full -left-3 absolute mt-1"></div>
+        <h3 class="font-semibold text-xl text-white">Delivery</h3>
+        <p class="text-white text-opacity-90">Delivered straight to your door, fresh and ready to eat.</p>
+      </div>
+      <div class="ml-6">
+        <div class="bg-orange-500 w-4 h-4 rounded-full -left-3 absolute mt-1"></div>
+        <h3 class="font-semibold text-xl text-white">Enjoy!</h3>
+        <p class="text-white text-opacity-90">Enjoy fresh, healthy, and organic produce every day.</p>
+      </div>
+    </div>
+  </div>
+  <!-- Optional: overlay for better text contrast -->
+  <div class="absolute inset-0 bg-black opacity-40"></div>
+</section>
+
+
+
+<!-- 4th Navbar -->
+<!-- Navbar -->
+<header class="bg-orange-500 shadow-md sticky top-0 z-50">
+  <div class="container mx-auto flex justify-between items-center px-6 py-4">
+    <div class="flex items-center gap-2">
+      <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png" alt="Carrot Logo" class="h-10">
+      <span class="text-white text-2xl font-bold">Carrot</span>
+    </div>
+    <nav>
+      <ul class="flex gap-6">
+        <li><a href="index.html" class="text-white font-semibold hover:text-yellow-100 transition">Home</a></li>
+        <li><a href="biodata.html" class="text-white font-semibold hover:text-yellow-100 transition border-b-2 border-white">Biodata</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  document.getElementById('biodataBtn').addEventListener('click', () => {
+    window.location.href = 'biodata.html';
+  });
+</script>
+
+
+
+<!-- Footer Section -->
+<footer class="bg-gray-900 text-white py-12">
+  <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+
+    <!-- Logo & About -->
+    <div>
+      <div class="flex items-center mb-4">
+        <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png" alt="Carrot Logo" class="h-10 mr-2">
+        <span class="text-2xl font-bold">Carrot</span>
+      </div>
+      <p class="text-gray-400">Fresh and organic fruits & vegetables delivered straight to your door. Eat healthy, live healthy.</p>
+    </div>
+
+    <!-- Quick Links -->
+    <div>
+      <h3 class="text-xl font-semibold mb-4">Quick Links</h3>
+      <ul class="space-y-2">
+        <li><a href="#" class="hover:text-orange-500 transition">Home</a></li>
+        <li><a href="#" class="hover:text-orange-500 transition">Products</a></li>
+        <li><a href="#" class="hover:text-orange-500 transition">Blog</a></li>
+        <li><a href="#" class="hover:text-orange-500 transition">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Social Links -->
+    <div>
+      <h3 class="text-xl font-semibold mb-4">Follow Us</h3>
+      <div class="flex gap-4">
+        <a href="#" class="hover:text-orange-500 transition text-2xl">📘</a>
+        <a href="#" class="hover:text-orange-500 transition text-2xl">📸</a>
+        <a href="#" class="hover:text-orange-500 transition text-2xl">🐦</a>
+      </div>
+    </div>
+
+    <!-- Newsletter -->
+    <div>
+      <h3 class="text-xl font-semibold mb-4">Newsletter</h3>
+      <p class="text-gray-400 mb-4">Subscribe to get latest updates and offers.</p>
+      <div class="flex">
+        <input type="email" placeholder="Enter your email" class="w-full px-3 py-2 rounded-l-md focus:outline-none">
+        <button class="bg-orange-500 hover:bg-orange-600 px-4 rounded-r-md text-white transition">Subscribe</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer Bottom -->
+  <div class="mt-12 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm">
+    &copy; 2025 Carrot Healthy Foods. All rights reserved.
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // --- SEARCH (kept unchanged) ---
+  window.performSearch = function() {
+    const query = document.getElementById('searchInput').value;
+    if (query.trim() !== "") {
+      alert(` You searched for : ${query}`);
+    } else {
+      alert("Please enter a search term!");
+    }
+  };
+
+  // --- FLOATING FRUITS (kept) ---
+  (function createFloating() {
+    const floatingContainer = document.getElementById('floating-elements');
+    if (!floatingContainer) return;
+    const items = ['🍎','🍊','🥕','🍇','🥦','🍉','🍌','🍓'];
+    for (let i = 0; i < 20; i++) {
+      const item = document.createElement('div');
+      item.innerText = items[Math.floor(Math.random() * items.length)];
+      item.className = 'absolute text-4xl md:text-5xl animate-float';
+      item.style.top = Math.random() * 100 + '%';
+      item.style.left = Math.random() * 100 + '%';
+      item.style.animationDuration = (5 + Math.random() * 5) + 's';
+      floatingContainer.appendChild(item);
+    }
+  })();
+
+  // --- CATEGORY IMAGES (kept but safe) ---
+  const images = {
+    vegetables: ["intro-1720461077.jpg","carrot.jpg"],
+    apple: ["aple.avif","ap.cms"],
+    mango: ["images.jpg","images (1).jpg"],
+    strawberry: ["images (3).jpg","h.jpeg"]
+  };
+  window.updateCards = function(category) {
+    try {
+      if (!images[category]) return;
+      const c1 = document.querySelector("#card1 img");
+      const c2 = document.querySelector("#card2 img");
+      if (c1 && images[category][0]) c1.src = images[category][0];
+      if (c2 && images[category][1]) c2.src = images[category][1];
+    } catch (e) { console.warn(e); }
+  };
+
+  // --- COUNTDOWN ---
+  (function countdown() {
+    const offerEndDate = new Date("2025-12-31T23:59:59").getTime();
+    function updateCountdown() {
+      const now = Date.now();
+      const distance = offerEndDate - now;
+      const daysEl = document.getElementById("days");
+      const hoursEl = document.getElementById("hours");
+      const minutesEl = document.getElementById("minutes");
+      const secondsEl = document.getElementById("seconds");
+      if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+      if (distance <= 0) {
+        daysEl.innerText = "00";
+        hoursEl.innerText = "00";
+        minutesEl.innerText = "00";
+        secondsEl.innerText = "00";
+        return;
+      }
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      daysEl.innerText = days;
+      hoursEl.innerText = hours;
+      minutesEl.innerText = minutes;
+      secondsEl.innerText = seconds;
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  })();
+
+  // --- WISHLIST BUTTON: check account then redirect ---
+  (function wishlistHandler() {
+    const wishlistBtn = document.getElementById("wishlistBtn");
+    if (!wishlistBtn) return;
+    wishlistBtn.addEventListener("click", () => {
+      const userAccount = localStorage.getItem("userAccount");
+      if (!userAccount) {
+        window.location.href = "account.html";
+      } else {
+        window.location.href = "wishlist.html";
+      }
+    });
+  })();
+
+  // --- CART / SIDEBAR LOGIC (robust, uses localStorage) ---
+  (function cartSystem() {
+    const cartSidebar = document.getElementById("cartSidebar");
+    const cartItemsContainer = document.getElementById("cartItems");
+    const totalAmountEl = document.getElementById("totalAmount");
+    const closeCartBtn = document.getElementById("closeCart");
+
+    if (!cartSidebar || !cartItemsContainer || !totalAmountEl) return;
+
+    // load cart from localStorage
+    let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+    // Helper: save
+    function saveCart() {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+
+    // Helper: open/close
+    function openCart() {
+      cartSidebar.classList.remove("translate-x-full");
+    }
+    function closeCart() {
+      cartSidebar.classList.add("translate-x-full");
+    }
+    if (closeCartBtn) closeCartBtn.addEventListener("click", closeCart);
+
+    // Display cart content
+    function displayCart() {
+      cartItemsContainer.innerHTML = "";
+      let total = 0;
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML = `<p class="text-gray-600">Cart is empty.</p>`;
+        totalAmountEl.innerText = "0.00";
+        return;
+      }
+
+      cart.forEach((item, idx) => {
+        total += (parseFloat(item.price) || 0) * (item.quantity || 1);
+        const itemEl = document.createElement("div");
+        itemEl.className = "p-3 bg-gray-100 rounded";
+        itemEl.innerHTML = `
+          <div class="flex justify-between items-center">
+            <h3 class="font-semibold">${escapeHtml(item.name)}</h3>
+            <button data-idx="${idx}" class="removeItem text-red-600 text-sm">Remove</button>
+          </div>
+          <p class="text-sm text-gray-700">$${(parseFloat(item.price) || 0).toFixed(2)}</p>
+          <div class="flex items-center gap-3 mt-2">
+            <button data-idx="${idx}" class="decQty px-2 bg-gray-300 rounded">-</button>
+            <span class="font-bold">${item.quantity}</span>
+            <button data-idx="${idx}" class="incQty px-2 bg-gray-300 rounded">+</button>
+          </div>
+        `;
+        cartItemsContainer.appendChild(itemEl);
+      });
+
+      // attach event listeners for newly created controls
+      cartItemsContainer.querySelectorAll('.removeItem').forEach(b => {
+        b.addEventListener('click', (e) => {
+          const i = parseInt(e.currentTarget.dataset.idx, 10);
+          cart.splice(i, 1);
+          saveCart();
+          displayCart();
         });
-    </script>
+      });
+      cartItemsContainer.querySelectorAll('.incQty').forEach(b => {
+        b.addEventListener('click', (e) => {
+          const i = parseInt(e.currentTarget.dataset.idx, 10);
+          cart[i].quantity = (cart[i].quantity || 1) + 1;
+          saveCart();
+          displayCart();
+        });
+      });
+      cartItemsContainer.querySelectorAll('.decQty').forEach(b => {
+        b.addEventListener('click', (e) => {
+          const i = parseInt(e.currentTarget.dataset.idx, 10);
+          if (cart[i].quantity > 1) cart[i].quantity--;
+          saveCart();
+          displayCart();
+        });
+      });
+
+      totalAmountEl.innerText = total.toFixed(2);
+    }
+
+    // add to cart buttons
+    document.querySelectorAll(".addToCart").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const name = btn.dataset.name;
+        const price = btn.dataset.price;
+        const img = btn.dataset.img || "";
+
+        if (!name || !price) {
+          console.warn("Product missing data-name or data-price");
+          return;
+        }
+
+        // find existing product (match by name)
+        const existing = cart.find(p => p.name === name);
+        if (existing) {
+          existing.quantity = (existing.quantity || 1) + 1;
+        } else {
+          cart.push({ name, price: parseFloat(price).toFixed(2), img, quantity: 1 });
+        }
+
+        saveCart();
+        displayCart();
+        openCart();
+      });
+    });
+
+    // initialize display on load
+    displayCart();
+  })();
+
+  // utility: simple HTML escape for text output
+  function escapeHtml(text) {
+    if (typeof text !== 'string') return text;
+    return text.replace(/[&<>"']/g, function(m) {
+      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m];
+    });
+  }
+});
+</script>
+
+
+</script>
+
+
+</script>
 
 </body>
 </html>

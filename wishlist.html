@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Wishlist</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+
+  <!-- Header -->
+  <header class="bg-white shadow-md py-4">
+    <div class="container mx-auto flex justify-between items-center px-6">
+      <h1 class="text-3xl font-bold text-orange-500">Your Wishlist</h1>
+      <a href="index.html" class="text-orange-500 font-semibold hover:underline">Back to Shop</a>
+    </div>
+  </header>
+
+
+
+  <!-- Customer Messages -->
+  <section class="py-12 bg-gray-100">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl font-bold text-center mb-10">What Our Customers Say</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="customerMessages">
+        <!-- Customer messages will be added dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // ====== Wishlist Items ======
+    const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [
+      {name: 'Fresh Apples', price: '4.99', img: 'aple.avif'},
+      {name: 'Organic Mangoes', price: '6.99', img: 'images.jpg'},
+      {name: 'Strawberries', price: '5.99', img: 'images (3).jpg'}
+    ];
+
+    const wishlistGrid = document.getElementById('wishlistGrid');
+
+    wishlist.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'bg-white rounded-lg shadow-lg p-4 flex flex-col items-center hover:shadow-2xl transition';
+      div.innerHTML = `
+        <img src="${item.img}" alt="${item.name}" class="w-full h-48 object-cover rounded-lg mb-4">
+        <h3 class="text-xl font-semibold mb-2">${item.name}</h3>
+        <p class="text-gray-700 font-bold mb-4">$${item.price} / kg</p>
+        <button onclick="removeItem('${item.name}')" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded w-full transition">Remove</button>
+      `;
+      wishlistGrid.appendChild(div);
+    });
+
+    function removeItem(name){
+      const index = wishlist.findIndex(i => i.name === name);
+      if(index !== -1){
+        wishlist.splice(index, 1);
+        localStorage.setItem('wishlist', JSON.stringify(wishlist));
+        location.reload();
+      }
+    }
+
+    // ====== Customer Messages ======
+    const messages = [];
+    for(let i=1;i<=100;i++){
+      messages.push(`"Customer ${i}: This is an amazing product! Highly recommend it."`);
+    }
+
+    const customerContainer = document.getElementById('customerMessages');
+    messages.forEach(msg => {
+      const div = document.createElement('div');
+      div.className = 'bg-white p-4 rounded-lg shadow-md hover:shadow-xl transition';
+      div.innerHTML = `<p class="text-gray-700">${msg}</p>`;
+      customerContainer.appendChild(div);
+    });
+    
+  </script>
+
+</body>
+</html>
